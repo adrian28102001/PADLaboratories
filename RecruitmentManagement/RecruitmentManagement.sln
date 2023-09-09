@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobManagementService", "JobManagementService\JobManagementService.csproj", "{059778E3-0754-40A0-AC70-81B7FAADE8D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationManagementService", "ApplicationManagementService\ApplicationManagementService.csproj", "{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{059778E3-0754-40A0-AC70-81B7FAADE8D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{059778E3-0754-40A0-AC70-81B7FAADE8D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{059778E3-0754-40A0-AC70-81B7FAADE8D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{059778E3-0754-40A0-AC70-81B7FAADE8D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
