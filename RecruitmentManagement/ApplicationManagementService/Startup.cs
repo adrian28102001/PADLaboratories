@@ -28,7 +28,7 @@ public class Startup
         
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-        RegisterDependencies.Register(serviceCollection, _configurationManager);
+        RegisterDependencies.Register(serviceCollection);
     }
 
     public void Configure(WebApplication app)
@@ -36,8 +36,16 @@ public class Startup
         if (app.Environment.IsDevelopment())
         {
         }
-
+        
+        app.UseRouting();
+        
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
+        
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapHealthChecks("/status");
+            endpoints.MapControllers();
+        });
         
         app.UseHttpsRedirection();
 

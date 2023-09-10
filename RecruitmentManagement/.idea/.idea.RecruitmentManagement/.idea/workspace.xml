@@ -13,13 +13,19 @@
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/JobManagementService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/JobManagementService.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Properties/launchSettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/Services/JobOffer/IJobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Services/JobOffer/IJobOfferService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/Services/JobOffer/JobOfferService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Services/JobOffer/JobOfferService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RecruitmentManagement.sln" beforeDir="false" afterPath="$PROJECT_DIR$/RecruitmentManagement.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/Repositories/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Repositories/IRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/Repositories/Repository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Repositories/Repository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/SharedLibrary.csproj" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,6 +161,7 @@
       <workItem from="1694281555015" duration="1533000" />
       <workItem from="1694343214939" duration="5367000" />
       <workItem from="1694357006723" duration="4551000" />
+      <workItem from="1694364124358" duration="949000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -192,19 +199,6 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApplicationManagementService/Middleware/TimeoutMiddleware.cs</url>
-          <line>17</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Middleware\TimeoutMiddleware.cs" initialLine="17" containingFunctionPresentation="Method 'InvokeAsync'">
-            <startOffsets>
-              <option value="390" />
-            </startOffsets>
-            <endOffsets>
-              <option value="444" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/JobManagementService/Middleware/TimeoutMiddleware.cs</url>
           <line>17</line>
           <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Middleware\TimeoutMiddleware.cs" initialLine="17" containingFunctionPresentation="Method 'InvokeAsync'">
@@ -216,6 +210,32 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
+          <line>20</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="21" containingFunctionPresentation="Method 'GetApplications'">
+            <startOffsets>
+              <option value="563" />
+            </startOffsets>
+            <endOffsets>
+              <option value="606" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs</url>
+          <line>19</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\JobOfferController.cs" initialLine="19" containingFunctionPresentation="Method 'GetJobById'">
+            <startOffsets>
+              <option value="512" />
+            </startOffsets>
+            <endOffsets>
+              <option value="557" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

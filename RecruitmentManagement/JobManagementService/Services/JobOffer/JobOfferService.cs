@@ -1,18 +1,17 @@
-﻿using ApplicationManagementService.Entities;
-using SharedLibrary.Repositories;
+﻿using JobManagementService.Repositories;
 
 namespace JobManagementService.Services.JobOffer;
 
 public class JobOfferService : IJobOfferService
 {
-    private readonly IRepository<Application> _repository;
+    private readonly IRepository<Entities.JobOffer> _repository;
 
-    public JobOfferService(IRepository<Application> repository)
+    public JobOfferService(IRepository<Entities.JobOffer> repository)
     {
         _repository = repository;
     }
 
-    public async Task<Application?> GetById(int id)
+    public async Task<Entities.JobOffer?> GetById(int id)
     {
         return await _repository.GetByIdAsync(id);
     }

@@ -1,13 +1,14 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JobManagementService.Context;
+using Microsoft.EntityFrameworkCore;
 
-namespace SharedLibrary.Repositories;
+namespace JobManagementService.Repositories;
 
 public class Repository<T> : IRepository<T> where T : class
 {
-    private readonly DbContext _context;
+    private readonly ApplicationDbContext _context;
     private readonly DbSet<T> _dbSet;
 
-    public Repository(DbContext context)
+    public Repository(ApplicationDbContext context)
     {
         _context = context;
         _dbSet = context.Set<T>();

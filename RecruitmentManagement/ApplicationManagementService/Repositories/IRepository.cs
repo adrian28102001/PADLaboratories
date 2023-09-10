@@ -1,4 +1,4 @@
-﻿namespace SharedLibrary.Repositories;
+﻿namespace ApplicationManagementService.Repositories;
 
 public interface IRepository<T> where T : class
 {

@@ -1,8 +1,7 @@
-﻿using ApplicationManagementService.DependencyRegister;
-using ApplicationManagementService.Middleware;
-using JobManagementService.Context;
+﻿using JobManagementService.Context;
+using JobManagementService.DependencyRegister;
+using JobManagementService.Middleware;
 using Microsoft.EntityFrameworkCore;
-using TimeoutMiddleware = JobManagementService.Middleware.TimeoutMiddleware;
 
 namespace JobManagementService;
 
@@ -28,19 +27,17 @@ public class Startup
 
         serviceCollection.AddControllersWithViews();
 
-        RegisterDependencies.Register(serviceCollection, _configurationManager);
+        RegisterDependencies.Register(serviceCollection);
     }
 
     public void Configure(WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {
-            app.UseSwagger();
-            app.UseSwaggerUI();
         }
 
         app.UseHttpsRedirection();
-
+        app.UseRouting();
         app.UseAuthorization();
         
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout

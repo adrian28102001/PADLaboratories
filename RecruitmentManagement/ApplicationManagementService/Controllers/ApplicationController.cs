@@ -1,89 +1,80 @@
 ﻿using ApplicationManagementService.Entities;
+using ApplicationManagementService.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using SharedLibrary.Repositories;
 
 namespace ApplicationManagementService.Controllers;
 
-public class ApplicationController : Controller
+[Route("api/[controller]")]
+[ApiController]
+public class ApplicationController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ApplicationsController : ControllerBase
+    private readonly IRepository<Application> _repository;
+
+    public ApplicationController(IRepository<Application> repository)
     {
-        private readonly IRepository<Application> _repository;
+        _repository = repository;
+    }
 
-        public ApplicationsController(IRepository<Application> repository)
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
+    {
+        return Ok(await _repository.GetAllAsync());
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<Application>> GetApplication(int id)
+    {
+        var application = await _repository.GetByIdAsync(id);
+        if (application == null)
         {
-            _repository = repository;
+            return NotFound();
         }
 
-        // GET: api/Applications
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
+        return Ok(application);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<Application>> PostApplication(Application application)
+    {
+        await _repository.AddAsync(application);
+        return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> PutApplication(int id, Application application)
+    {
+        if (id != application.Id)
         {
-            return Ok(await _repository.GetAllAsync());
+            return BadRequest();
         }
 
-        // GET: api/Applications/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Application>> GetApplication(int id)
+        if (await _repository.GetByIdAsync(id) == null)
         {
-            var application = await _repository.GetByIdAsync(id);
-            if (application == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(application);
+            return NotFound();
         }
 
-        // POST: api/Applications
-        [HttpPost]
-        public async Task<ActionResult<Application>> PostApplication(Application application)
+        try
         {
-            await _repository.AddAsync(application);
-            return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
+            await _repository.UpdateAsync(application);
+        }
+        catch (Exception ex)
+        {
+            // ignored
         }
 
-        // PUT: api/Applications/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutApplication(int id, Application application)
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteApplication(int id)
+    {
+        var application = await _repository.GetByIdAsync(id);
+        if (application == null)
         {
-            if (id != application.Id)
-            {
-                return BadRequest();
-            }
-
-            try
-            {
-                await _repository.UpdateAsync(application);
-            }
-            catch // You might want to catch specific exceptions, such as not found exceptions
-            {
-                // If application with given ID does not exist
-                if (await _repository.GetByIdAsync(id) == null)
-                {
-                    return NotFound();
-                }
-
-                throw;
-            }
-
-            return NoContent();
+            return NotFound();
         }
 
-        // DELETE: api/Applications/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteApplication(int id)
-        {
-            var application = await _repository.GetByIdAsync(id);
-            if (application == null)
-            {
-                return NotFound();
-            }
-
-            await _repository.DeleteAsync(application);
-            return NoContent();
-        }
+        await _repository.DeleteAsync(application);
+        return NoContent();
     }
 }
