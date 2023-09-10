@@ -69,9 +69,9 @@ namespace JobManagementService.Migrations
                 columns: new[] { "Id", "ClosingDate", "Description", "LocationId", "PostedDate", "Salary", "Title", "Type" },
                 values: new object[,]
                 {
-                    { 1, null, "Develop cutting-edge applications", 1, new DateTime(2023, 9, 10, 16, 1, 39, 548, DateTimeKind.Utc).AddTicks(6685), 60000m, "Software Developer", 0 },
-                    { 2, null, "Manage and maintain IT infrastructure", 2, new DateTime(2023, 9, 10, 16, 1, 39, 548, DateTimeKind.Utc).AddTicks(6687), 50000m, "System Administrator", 0 },
-                    { 3, null, "Manage and maintain database systems", 3, new DateTime(2023, 9, 10, 16, 1, 39, 548, DateTimeKind.Utc).AddTicks(6688), 55000m, "Database Administrator", 0 }
+                    { 1, null, "Develop cutting-edge applications", 1, new DateTime(2023, 9, 10, 17, 38, 0, 510, DateTimeKind.Utc).AddTicks(6812), 60000m, "Software Developer", 0 },
+                    { 2, null, "Manage and maintain IT infrastructure", 2, new DateTime(2023, 9, 10, 17, 38, 0, 510, DateTimeKind.Utc).AddTicks(6816), 50000m, "System Administrator", 0 },
+                    { 3, null, "Manage and maintain database systems", 3, new DateTime(2023, 9, 10, 17, 38, 0, 510, DateTimeKind.Utc).AddTicks(6818), 55000m, "Database Administrator", 0 }
                 });
 
             migrationBuilder.CreateIndex(

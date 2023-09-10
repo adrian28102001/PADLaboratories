@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobManagementService.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230910160139_InitialCreate")]
+    [Migration("20230910173800_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace JobManagementService.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("ApplicationManagementService.Entities.JobOffer", b =>
+            modelBuilder.Entity("JobManagementService.Entities.JobOffer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,7 @@ namespace JobManagementService.Migrations
                             Id = 1,
                             Description = "Develop cutting-edge applications",
                             LocationId = 1,
-                            PostedDate = new DateTime(2023, 9, 10, 16, 1, 39, 548, DateTimeKind.Utc).AddTicks(6685),
+                            PostedDate = new DateTime(2023, 9, 10, 17, 38, 0, 510, DateTimeKind.Utc).AddTicks(6812),
                             Salary = 60000m,
                             Title = "Software Developer",
                             Type = 0
@@ -79,7 +79,7 @@ namespace JobManagementService.Migrations
                             Id = 2,
                             Description = "Manage and maintain IT infrastructure",
                             LocationId = 2,
-                            PostedDate = new DateTime(2023, 9, 10, 16, 1, 39, 548, DateTimeKind.Utc).AddTicks(6687),
+                            PostedDate = new DateTime(2023, 9, 10, 17, 38, 0, 510, DateTimeKind.Utc).AddTicks(6816),
                             Salary = 50000m,
                             Title = "System Administrator",
                             Type = 0
@@ -89,14 +89,14 @@ namespace JobManagementService.Migrations
                             Id = 3,
                             Description = "Manage and maintain database systems",
                             LocationId = 3,
-                            PostedDate = new DateTime(2023, 9, 10, 16, 1, 39, 548, DateTimeKind.Utc).AddTicks(6688),
+                            PostedDate = new DateTime(2023, 9, 10, 17, 38, 0, 510, DateTimeKind.Utc).AddTicks(6818),
                             Salary = 55000m,
                             Title = "Database Administrator",
                             Type = 0
                         });
                 });
 
-            modelBuilder.Entity("ApplicationManagementService.Entities.Location", b =>
+            modelBuilder.Entity("JobManagementService.Entities.Location", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,9 +147,9 @@ namespace JobManagementService.Migrations
                         });
                 });
 
-            modelBuilder.Entity("ApplicationManagementService.Entities.JobOffer", b =>
+            modelBuilder.Entity("JobManagementService.Entities.JobOffer", b =>
                 {
-                    b.HasOne("ApplicationManagementService.Entities.Location", "Location")
+                    b.HasOne("JobManagementService.Entities.Location", "Location")
                         .WithMany()
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)

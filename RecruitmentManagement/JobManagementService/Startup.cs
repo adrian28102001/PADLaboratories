@@ -34,22 +34,24 @@ public class Startup
     {
         if (app.Environment.IsDevelopment())
         {
+            // Potentially add any dev-specific middlewares like UseDeveloperExceptionPage here.
         }
 
         app.UseHttpsRedirection();
+
         app.UseRouting();
+
         app.UseAuthorization();
-        
-        app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
+    
+        // app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
 
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHealthChecks("/status");
             endpoints.MapControllers();
         });
-        
-        app.MapControllers();
-
+    
         app.Run();
     }
+
 }

@@ -56,7 +56,6 @@ public class ApplicationDbContext : DbContext
             }
         );
     }
-
     
     public DbSet<Application> Applications { get; set; }
     public DbSet<Candidate> Candidates { get; set; }
