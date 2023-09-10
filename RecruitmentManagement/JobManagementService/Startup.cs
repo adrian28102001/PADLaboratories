@@ -28,6 +28,7 @@ public class Startup
         serviceCollection.AddControllersWithViews();
 
         RegisterDependencies.Register(serviceCollection);
+        RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
     }
 
     public void Configure(WebApplication app)
@@ -43,7 +44,7 @@ public class Startup
 
         app.UseAuthorization();
     
-        // app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
+        app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
 
         app.UseEndpoints(endpoints =>
         {

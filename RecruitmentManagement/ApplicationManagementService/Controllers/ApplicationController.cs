@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ApplicationManagementService.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/applications")]
 [ApiController]
 public class ApplicationController : ControllerBase
 {

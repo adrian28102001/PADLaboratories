@@ -1,7 +1,10 @@
-﻿using ApplicationManagementService.Context;
+﻿using System.Text;
+using ApplicationManagementService.Configurations;
+using ApplicationManagementService.Context;
 using ApplicationManagementService.DependencyRegister;
 using ApplicationManagementService.Middleware;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace ApplicationManagementService;
 
@@ -29,6 +32,7 @@ public class Startup
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         RegisterDependencies.Register(serviceCollection);
+        RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
     }
 
     public void Configure(WebApplication app)
@@ -45,7 +49,8 @@ public class Startup
         app.UseAuthorization();
     
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
-
+        app.UseMiddleware<ConcurrencyMiddleware>(); // Handle concurrency
+        
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHealthChecks("/status");

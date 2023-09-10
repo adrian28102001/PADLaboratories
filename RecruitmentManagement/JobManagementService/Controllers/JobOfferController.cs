@@ -14,6 +14,12 @@ public class JobOfferController : Controller
         _jobOfferService = jobOfferService;
     }
 
+    [HttpGet]
+    public ActionResult CheckConnection()
+    {
+        return Ok();
+    }
+
     [HttpGet("{id}")]
     public async Task<ActionResult<JobOffer>> GetJobById(int id)
     {
