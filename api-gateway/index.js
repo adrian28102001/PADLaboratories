@@ -53,6 +53,10 @@ app.use('/joboffers', async (req, res) => {
     }
 });
 
+app.get('/health', (req, res) => {
+    res.status(200).send('API Gateway is healthy');
+});
+
 app.listen(PORT, () => {
     console.log(`API Gateway is running on port ${PORT}`);
 });

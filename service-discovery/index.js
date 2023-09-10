@@ -24,6 +24,10 @@ app.get('/discover/:name', (req, res) => {
     res.send(service);
 });
 
+app.get('/health', (req, res) => {
+    res.status(200).send('Service Discovery is healthy');
+});
+
 app.listen(PORT, () => {
     console.log(`Service Discovery is running on port ${PORT}`);
 });
