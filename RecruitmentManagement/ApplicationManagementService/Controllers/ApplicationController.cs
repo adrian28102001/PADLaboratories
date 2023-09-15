@@ -67,7 +67,7 @@ public class ApplicationController : ControllerBase
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteApplication(int id)
-    {
+    {   
         var application = await _repository.GetByIdAsync(id);
         if (application == null)
         {

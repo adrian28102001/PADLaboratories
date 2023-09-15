@@ -11,7 +11,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../service-discovery/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -149,7 +149,7 @@
       <workItem from="1694343214939" duration="5367000" />
       <workItem from="1694357006723" duration="4551000" />
       <workItem from="1694364124358" duration="2634000" />
-      <workItem from="1694367044371" duration="6083000" />
+      <workItem from="1694367044371" duration="6923000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
