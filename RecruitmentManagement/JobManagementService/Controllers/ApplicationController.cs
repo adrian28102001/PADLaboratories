@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace JobManagementService.Controllers;
 
-[Route("api/jobs/applications")]
+[Route("jobmanagement/api/jobs/applications")]
 public class ApplicationController : ControllerBase
 {
     private readonly HttpClient _apiGatewayClient;

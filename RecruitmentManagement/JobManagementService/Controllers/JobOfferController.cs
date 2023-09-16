@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobManagementService.Controllers;
 
-[Route("api/joboffers")]
+[Route("jobmanagement/api/joboffers")]
 public class JobOfferController : Controller
 {
     private readonly IJobOfferService _jobOfferService;

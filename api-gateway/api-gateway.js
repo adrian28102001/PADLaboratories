@@ -1,24 +1,29 @@
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 const express = require('express');
 const axios = require('axios');
 const redis = require('redis');
-const { setupCache } = require('axios-cache-adapter');
+const {setupCache} = require('axios-cache-adapter');
 
 const app = express();
 const PORT = 3000;
 const SERVICE_DISCOVERY_URL = 'http://localhost:4000';
 
 const redisClient = redis.createClient({
-    host: 'localhost', // Redis server address
-    port: 6379         // default Redis port
+    host: 'localhost',
+    port: 6379
 });
 
-// Create `axios` instance with pre-configured `axios-cache-adapter` using a Redis cache
+// Configure caching for axios
 const cache = setupCache({
     debug: true,
     readOnError: false,
     clearOnStale: true,
-    redis: redisClient
+    maxAge: 15 * 60 * 1000,  // cache for 15 minutes
+    redis: redisClient,
+    exclude: {
+        query: false
+    }
 });
 
 const api = axios.create({
@@ -36,31 +41,17 @@ const discoverService = async (serviceName) => {
     }
 };
 
-app.use('/applications', async (req, res) => {
-    const applicationServiceURL = await discoverService('ApplicationManagementService');
-    if (!applicationServiceURL) return res.status(500).send('Service not found');
+app.use('/', async (req, res) => {
+    const serviceName = req.path.split('/')[1];
+    const serviceCamelCaseName = `${serviceName.charAt(0)}${serviceName.slice(1)}service`;
+    const serviceURL = await discoverService(serviceCamelCaseName);
+
+    if (!serviceURL) return res.status(500).send('Service not found');
 
     try {
         const response = await api({
             method: req.method,
-            url: `${applicationServiceURL}${req.path}`,
-            data: req.body
-        });
-
-        res.send(response.data);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
-app.use('/joboffers', async (req, res) => {
-    const jobServiceURL = await discoverService('JobManagementService');
-    if (!jobServiceURL) return res.status(500).send('Service not found');
-
-    try {
-        const response = await api({
-            method: req.method,
-            url: `${jobServiceURL}${req.path}`,
+            url: `${serviceURL}${req.path}`,
             data: req.body
         });
 
