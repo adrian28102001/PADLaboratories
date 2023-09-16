@@ -1,11 +1,13 @@
 ﻿using ApplicationManagementService.Entities;
+using ApplicationManagementService.Extensions;
+using ApplicationManagementService.Models;
 using ApplicationManagementService.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManagementService.Controllers;
 
-[Route("api/applications")]
+[Route("applicationmanagement/api/applications")]
 [ApiController]
 public class ApplicationController : ControllerBase
 {
@@ -49,9 +51,9 @@ public class ApplicationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Application>> PostApplication(Application application)
+    public async Task<ActionResult<Application>> PostApplication(ApplicationModel application)
     {
-        await _repository.AddAsync(application);
+        await _repository.AddAsync(application.ToModel());
         return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
     }
 

@@ -43,7 +43,7 @@ const discoverService = async (serviceName) => {
 
 app.use('/', async (req, res) => {
     const serviceName = req.path.split('/')[1];
-    const serviceCamelCaseName = `${serviceName.charAt(0)}${serviceName.slice(1)}service`;
+    const serviceCamelCaseName = `${serviceName.charAt(0)}${serviceName.slice(1)}`;
     const serviceURL = await discoverService(serviceCamelCaseName);
 
     if (!serviceURL) return res.status(500).send('Service not found');
@@ -52,13 +52,17 @@ app.use('/', async (req, res) => {
         const response = await api({
             method: req.method,
             url: `${serviceURL}${req.path}`,
-            data: req.body
+            data: req.body,
         });
 
         res.send(response.data);
     } catch (error) {
         res.status(500).send(error.message);
     }
+});
+
+app.get('/health', (req, res) => {
+    res.status(200).send('API Gateway is healthy');
 });
 
 app.listen(PORT, () => {

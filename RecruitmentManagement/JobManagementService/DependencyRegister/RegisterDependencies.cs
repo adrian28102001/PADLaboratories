@@ -17,7 +17,7 @@ public static class RegisterDependencies
 
         services.AddHttpClient("APIGateway", client =>
         {
-            client.BaseAddress = new Uri("http://localhost:3000");
+            client.BaseAddress = new Uri("http://localhost:3000/jobmanagement");
         });
         
         services.AddHealthChecks();

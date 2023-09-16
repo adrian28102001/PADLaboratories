@@ -23,8 +23,7 @@ public class TimeoutMiddleware
         if (completedTask == timeoutTask)
         {
             context.Response.StatusCode = (int)HttpStatusCode.RequestTimeout;
-            await context.Response.WriteAsync("Request timeout", cancellationToken: cts.Token);
-            cts.Cancel();
+            await context.Response.WriteAsync("Request timeout");
         }
     }
 }

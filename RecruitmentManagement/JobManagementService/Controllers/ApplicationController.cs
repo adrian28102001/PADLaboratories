@@ -19,7 +19,7 @@ public class ApplicationController : ControllerBase
     {
         try
         {
-            var response = await _apiGatewayClient.GetAsync($"/api/applications/{jobId}");
+            var response = await _apiGatewayClient.GetAsync($"applicationmanagement/api/applications/job/{jobId}");
 
             if (response.IsSuccessStatusCode)
             {
