@@ -9,6 +9,10 @@ const app = express();
 const PORT = 3000;
 const SERVICE_DISCOVERY_URL = 'http://localhost:4000';
 
+//Circuit
+const TIMEOUT_LIMIT = 5000; // Assuming 5 seconds as the task timeout limit
+const circuitBreaker = new CircuitBreaker(TIMEOUT_LIMIT);
+
 const redisClient = redis.createClient({
     host: 'localhost',
     port: 6379
@@ -34,9 +38,12 @@ app.use(express.json());
 
 const discoverService = async (serviceName) => {
     try {
-        const response = await axios.get(`${SERVICE_DISCOVERY_URL}/discover/${serviceName}`);
-        return response.data;
+        return await circuitBreaker.call(async () => {
+            const response = await axios.get(`${SERVICE_DISCOVERY_URL}/discover/${serviceName}`);
+            return response.data;
+        });
     } catch (error) {
+        console.error('Circuit breaker tripped:', error.message);
         return null;
     }
 };
