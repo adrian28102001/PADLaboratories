@@ -14,7 +14,7 @@ public class Startup
         _configurationManager = configurationManager;
     }
 
-    public void ConfigureServices(IServiceCollection serviceCollection)
+    public async Task ConfigureServices(IServiceCollection serviceCollection)
     {
         // Add services to the container.
         var connectionString = _configurationManager.GetConnectionString("DefaultConnection");
@@ -28,7 +28,8 @@ public class Startup
         serviceCollection.AddControllersWithViews();
 
         RegisterDependencies.Register(serviceCollection);
-        RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
+
+        await RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
     }
 
     public void Configure(WebApplication app)
@@ -43,7 +44,7 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthorization();
-    
+
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
 
         app.UseEndpoints(endpoints =>
@@ -51,8 +52,7 @@ public class Startup
             endpoints.MapHealthChecks("/status");
             endpoints.MapControllers();
         });
-    
+
         app.Run();
     }
-
 }

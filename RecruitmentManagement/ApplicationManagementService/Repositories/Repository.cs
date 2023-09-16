@@ -13,6 +13,11 @@ public class Repository<T> : IRepository<T> where T : class
         _context = context;
         _dbSet = context.Set<T>();
     }
+    
+    public IQueryable<T> GetAllQuery()
+    {
+        return _dbSet.AsQueryable();
+    }
 
     public Task<List<T>> GetAllAsync()
     {

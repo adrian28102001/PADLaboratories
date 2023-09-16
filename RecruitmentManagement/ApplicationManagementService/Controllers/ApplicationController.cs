@@ -1,6 +1,7 @@
 ﻿using ApplicationManagementService.Entities;
 using ApplicationManagementService.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationManagementService.Controllers;
 
@@ -25,6 +26,20 @@ public class ApplicationController : ControllerBase
     public async Task<ActionResult<Application>> GetApplication(int id)
     {
         var application = await _repository.GetByIdAsync(id);
+        if (application == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(application);
+    }
+
+    [HttpGet("job/{jobId}")]
+    public async Task<ActionResult<Application>> GetApplicationByJobId(int jobId)
+    {
+        var table = _repository.GetAllQuery();
+        var application = await table.FirstOrDefaultAsync(it => it.JobOfferId == jobId);
+
         if (application == null)
         {
             return NotFound();
@@ -67,7 +82,7 @@ public class ApplicationController : ControllerBase
 
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteApplication(int id)
-    {   
+    {
         var application = await _repository.GetByIdAsync(id);
         if (application == null)
         {

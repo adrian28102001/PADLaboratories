@@ -17,7 +17,7 @@ public class Startup
         _configurationManager = configurationManager;
     }
 
-    public void ConfigureServices(IServiceCollection serviceCollection)
+    public async Task ConfigureServices(IServiceCollection serviceCollection)
     {
         // Add services to the container.
         var connectionString = _configurationManager.GetConnectionString("DefaultConnection");
@@ -32,7 +32,7 @@ public class Startup
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
         RegisterDependencies.Register(serviceCollection);
-        RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
+        await RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
     }
 
     public void Configure(WebApplication app)
@@ -57,9 +57,6 @@ public class Startup
             endpoints.MapControllers();
         });
     
-        // This seems redundant since you already have endpoints.MapControllers(); above.
-        // app.MapControllers();
-
         app.Run();
     }
 }
