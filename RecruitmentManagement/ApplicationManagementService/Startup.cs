@@ -17,7 +17,7 @@ public class Startup
         _configurationManager = configurationManager;
     }
 
-    public async Task ConfigureServices(IServiceCollection serviceCollection)
+    public void ConfigureServices(IServiceCollection serviceCollection)
     {
         // Add services to the container.
         var connectionString = _configurationManager.GetConnectionString("DefaultConnection");
@@ -25,17 +25,14 @@ public class Startup
         serviceCollection.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(connectionString));
 
-        // serviceCollection.AddDatabaseDeveloperPageExceptionFilter();
-
         serviceCollection.AddControllersWithViews();
-        
+
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-        RegisterDependencies.Register(serviceCollection);
-        await RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
+        RegisterDependencies.Register(serviceCollection, _configurationManager);
     }
 
-    public void Configure(WebApplication app)
+    public async Task Configure(WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {
@@ -47,16 +44,19 @@ public class Startup
         app.UseRouting();
 
         app.UseAuthorization();
-    
+
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
         app.UseMiddleware<ConcurrencyMiddleware>(); // Handle concurrency
-        
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHealthChecks("/status");
             endpoints.MapControllers();
         });
-    
-        app.Run();
+
+        // Call RegisterToServiceDiscovery after the app configuration.
+        await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager);
+
+        await app.RunAsync();
     }
 }

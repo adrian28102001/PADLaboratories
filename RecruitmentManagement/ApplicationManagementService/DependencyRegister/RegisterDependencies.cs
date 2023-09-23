@@ -1,33 +1,45 @@
 ﻿using System.Text;
 using ApplicationManagementService.Configurations;
 using ApplicationManagementService.Context;
+using ApplicationManagementService.Factories;
+using ApplicationManagementService.Models;
 using ApplicationManagementService.Repositories;
 using ApplicationManagementService.Services;
 using Newtonsoft.Json;
 using Polly;
+using SharedLibrary.Services;
 
 namespace ApplicationManagementService.DependencyRegister;
 
 public static class RegisterDependencies
 {
-    public static void Register(IServiceCollection services)
+    public static void Register(IServiceCollection services, ConfigurationManager configurationManager)
     {
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-        
-        services.AddHttpClient("APIGateway", client =>
-        {
-            client.BaseAddress = new Uri("http://localhost:3000/jobmanagement");
-        });
+
+        services.AddHttpClient("APIGateway",
+            client => { client.BaseAddress = new Uri("https://localhost:3000/jobmanagement"); });
 
         services.AddHealthChecks();
-        
+
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
+
+        services.AddTransient<IEmailService, EmailService>();
+        services.AddTransient<IFileStorageService, FileStorageService>();
+
+        services.AddSingleton<IHttpClientFactory, CustomHttpClientFactory>();
+
+        services.Configure<EmailSettings>(configurationManager.GetSection("EmailSettings"));
     }
 
-    public static async Task RegisterToServiceDiscovery(ConfigurationManager configurationManager)
+    public static async Task RegisterToServiceDiscovery(IServiceProvider serviceProvider,
+        ConfigurationManager configurationManager)
     {
         var serviceConfig = configurationManager.GetSection("ServiceConfig").Get<ServiceConfiguration>();
+        var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+        var client = httpClientFactory.CreateClient();
+        client.BaseAddress = new Uri(serviceConfig.DiscoveryUrl);
 
         var retryPolicy = Policy
             .Handle<HttpRequestException>()
@@ -39,26 +51,24 @@ public static class RegisterDependencies
                         $"Failed to register with Service Discovery due to {exception.Message}. Waiting for {timeSpan} seconds before retrying...");
                 });
 
+
         await retryPolicy.ExecuteAsync(async () =>
         {
-            using (var client = new HttpClient())
-            {
-                var response = await client.PostAsync($"{serviceConfig.DiscoveryUrl}/register",
-                    new StringContent(JsonConvert.SerializeObject(new
-                    {
-                        name = serviceConfig.ServiceName,
-                        url = serviceConfig.ServiceUrl
-                    }), Encoding.UTF8, "application/json"));
+            var response = await client.PostAsync("register",
+                new StringContent(JsonConvert.SerializeObject(new
+                {
+                    name = serviceConfig.ServiceName,
+                    url = serviceConfig.ServiceUrl
+                }), Encoding.UTF8, "application/json"));
 
-                if (response.IsSuccessStatusCode)
-                {
-                    Console.WriteLine("Successfully registered with Service Discovery!");
-                }
-                else
-                {
-                    throw new HttpRequestException(
-                        $"Failed to register with Service Discovery. StatusCode: {response.StatusCode}");
-                }
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Successfully registered with Service Discovery!");
+            }
+            else
+            {
+                throw new HttpRequestException(
+                    $"Failed to register with Service Discovery. StatusCode: {response.StatusCode}");
             }
         });
     }

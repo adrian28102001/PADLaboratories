@@ -15,14 +15,16 @@
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Repositories/IRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Repositories/IRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Repositories/Repository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Repositories/Repository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/JobManagementServiceProxy.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Models/ApplicationModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Models/ApplicationModel.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Program.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/JobManagementService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/JobManagementService.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RecruitmentManagement.sln" beforeDir="false" afterPath="$PROJECT_DIR$/RecruitmentManagement.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../readme.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,13 +49,16 @@
     </option>
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/296cc1d959fe4306a2ec43d88321714686cb0/be/c641cfa7/MediaTypeNames.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4b5b2c0a540e40dcade529db88fa6ec860678/0c/6381fc1f/DeveloperExceptionPageMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/4f8ae49db7e94f94a82b39bd61a7a2808a800/30/17b107c0/NpgsqlModelBuilderExtensions.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/831b7afb4f024d399aa7f21c2ef99b9c22d10/02/4a03613f/IHttpClientFactory.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/831b7afb4f024d399aa7f21c2ef99b9c22d10/91/9e00304b/HttpClientFactoryExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/b942343e5d604e19b6be822af4975357a088/7e/3476d01e/HttpsRedirectionMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cb19de58a8bd49dfa54c707603da219b60710/1a/a3fd8cb2/DeveloperExceptionPageMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/cf570696db4e4395aa8123a03008f2c51b92a0/be/f48846f1/HttpClient.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/e4905fb04e9143a383cf15c59a6d1a9c1fcb98/78/64e5f9ef/DbSet`1.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/ea9458842aad47e8a05443837c438552a24ab0/ed/c5d936db/DefaultInterpolatedStringHandler.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/685375de32fa2adf315b38f6d22782547cd9795e6d4d109e94522c8b6cc446c0/DeveloperExceptionPageMiddleware.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/b4aa9d6deee74e2a511d54506de2de864a4b58ad22637cbbc79ef58cb10e3e9/ConfigurationExtensions.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/ApplicationManagementService/Repositories/IRepository.cs" root0="FORCE_HIGHLIGHTING" />
@@ -69,28 +74,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "http.certificates",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\gherm\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\gherm\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ApplicationManagementService">
     <configuration name="ApplicationManagementService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" />
@@ -170,6 +175,7 @@
       <workItem from="1694794481651" duration="3474000" />
       <workItem from="1694859292294" duration="2101000" />
       <workItem from="1694861440397" duration="525000" />
+      <workItem from="1695472948961" duration="9307000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -208,42 +214,68 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
-          <line>21</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="21" containingFunctionPresentation="Method 'GetApplications'">
+          <line>64</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="63" containingFunctionPresentation="Method 'PostApplication'">
             <startOffsets>
-              <option value="600" />
+              <option value="2040" />
             </startOffsets>
             <endOffsets>
-              <option value="643" />
+              <option value="2104" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="7" />
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs</url>
-          <line>19</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\JobOfferController.cs" initialLine="19" containingFunctionPresentation="Method 'GetJobById'">
+          <url>file://$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs</url>
+          <line>45</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\DependencyRegister\RegisterDependencies.cs" initialLine="45" containingFunctionPresentation="Lambda expression inside Method 'RegisterToServiceDiscovery'">
             <startOffsets>
-              <option value="512" />
+              <option value="1610" />
             </startOffsets>
             <endOffsets>
-              <option value="557" />
+              <option value="1939" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="8" />
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ApplicationManagementService/Middleware/TimeoutMiddleware.cs</url>
+          <line>17</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Middleware\TimeoutMiddleware.cs" initialLine="17" containingFunctionPresentation="Method 'InvokeAsync'">
+            <startOffsets>
+              <option value="390" />
+            </startOffsets>
+            <endOffsets>
+              <option value="444" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
-          <line>39</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="39" containingFunctionPresentation="Method 'GetApplicationByJobId'">
+          <line>38</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="38" containingFunctionPresentation="Method 'GetApplication'">
             <startOffsets>
-              <option value="1062" />
+              <option value="1349" />
             </startOffsets>
             <endOffsets>
-              <option value="1100" />
+              <option value="1402" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="15" />
+          <option name="timeStamp" value="29" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
+          <line>32</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="32" containingFunctionPresentation="Method 'GetApplications'">
+            <startOffsets>
+              <option value="1190" />
+            </startOffsets>
+            <endOffsets>
+              <option value="1233" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="30" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

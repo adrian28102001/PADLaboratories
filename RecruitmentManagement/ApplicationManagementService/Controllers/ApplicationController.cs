@@ -4,6 +4,8 @@ using ApplicationManagementService.Models;
 using ApplicationManagementService.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using SharedLibrary.Services;
 
 namespace ApplicationManagementService.Controllers;
 
@@ -12,10 +14,17 @@ namespace ApplicationManagementService.Controllers;
 public class ApplicationController : ControllerBase
 {
     private readonly IRepository<Application> _repository;
+    private readonly IEmailService _emailService;
+    private readonly IFileStorageService _fileStorageService;
+    private readonly EmailSettings _emailSettings;
 
-    public ApplicationController(IRepository<Application> repository)
+    public ApplicationController(IRepository<Application> repository, IEmailService emailService,
+        IFileStorageService fileStorageService, IOptions<EmailSettings> emailSettings)
     {
         _repository = repository;
+        _emailService = emailService;
+        _fileStorageService = fileStorageService;
+        _emailSettings = emailSettings.Value;
     }
 
     [HttpGet]
@@ -51,8 +60,21 @@ public class ApplicationController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult<Application>> PostApplication(ApplicationModel application)
+    public async Task<ActionResult<Application>> PostApplication([FromForm] ApplicationModel application)
     {
+        if (application.CVFile != null && application.CVFile.Length > 0)
+        {
+            var filePath = await _fileStorageService.SaveFileAsync(application.CVFile);
+            application.CVPath = filePath;
+
+            await _emailService.SendEmailWithAttachmentAsync(
+                _emailSettings.Recipient,
+                _emailSettings.Subject,
+                $"New application received from CandidateId: {application.CandidateId} for JobOfferId: {application.JobOfferId}",
+                filePath
+            );
+        }
+
         await _repository.AddAsync(application.ToModel());
         return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
     }

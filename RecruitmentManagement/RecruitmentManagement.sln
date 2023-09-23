@@ -4,6 +4,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobManagementService", "Job
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationManagementService", "ApplicationManagementService\ApplicationManagementService.csproj", "{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{C8027B3B-FEC1-48C9-94C7-DC4074A8BCA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApplicationManagementService.Tests", "ApplicationManagementService.Tests\ApplicationManagementService.Tests.csproj", "{1BC05061-36C2-4BE9-9467-5C4D975189BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +22,13 @@ Global
 		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE7FBC4A-7FF5-4CAE-B423-0F74F737C7F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8027B3B-FEC1-48C9-94C7-DC4074A8BCA0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8027B3B-FEC1-48C9-94C7-DC4074A8BCA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8027B3B-FEC1-48C9-94C7-DC4074A8BCA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8027B3B-FEC1-48C9-94C7-DC4074A8BCA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BC05061-36C2-4BE9-9467-5C4D975189BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BC05061-36C2-4BE9-9467-5C4D975189BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BC05061-36C2-4BE9-9467-5C4D975189BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BC05061-36C2-4BE9-9467-5C4D975189BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

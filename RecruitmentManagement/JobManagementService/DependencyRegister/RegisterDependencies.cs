@@ -33,10 +33,10 @@ public static class RegisterDependencies
         var retryPolicy = Policy
             .Handle<HttpRequestException>()
             .WaitAndRetryForeverAsync(
-                retryAttempt => TimeSpan.FromSeconds(30),
+                retryAttempt => TimeSpan.FromSeconds(10),
                 (exception, timeSpan, context) => 
                 {
-                    Console.WriteLine($"Failed to register with Service Discovery due to {exception.Message}. Waiting for {timeSpan} seconds before retrying...");
+                    Console.WriteLine($"Failed to register with Service Discovery due to {exception.Message}. Waiting for 10 seconds before retrying...");
                 });
 
         await retryPolicy.ExecuteAsync(async () => 

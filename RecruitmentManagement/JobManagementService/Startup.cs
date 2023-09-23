@@ -46,7 +46,8 @@ public class Startup
         app.UseAuthorization();
 
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
-
+        app.UseMiddleware<ConcurrencyMiddleware>(); // Handle concurrency
+        
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHealthChecks("/status");

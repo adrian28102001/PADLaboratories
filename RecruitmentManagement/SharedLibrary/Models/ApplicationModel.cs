@@ -1,4 +1,6 @@
-﻿namespace ApplicationManagementService.Models;
+﻿using SharedLibrary.Models.Enums;
+
+namespace SharedLibrary.Models;
 
 public class ApplicationModel
 {
@@ -10,5 +12,4 @@ public class ApplicationModel
     public DateTime AppliedDate { get; set; }
     public DateTime? InterviewDate { get; set; }
     public string Feedback { get; set; }
-    public IFormFile? CVFile { get; set; }
 }

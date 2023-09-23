@@ -1,8 +1,14 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 const express = require('express');
 const redis = require('redis');
 const app = express();
 const PORT = 4000;
+const https = require('https');
+const fs = require('fs');
+
+const options = {
+    key: fs.readFileSync('U:\\Keys\\key.pem'),
+    cert: fs.readFileSync('U:\\Keys\\cert.pem')
+};
 
 const redisClient = redis.createClient({
     host: 'localhost',
@@ -81,6 +87,6 @@ app.get('/health', (req, res) => {
     res.status(200).send('Service Discovery is healthy');
 });
 
-app.listen(PORT, () => {
+https.createServer(options, app).listen(PORT, () => {
     console.log(`Service Discovery is running on port ${PORT}`);
 });

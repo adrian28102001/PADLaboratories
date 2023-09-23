@@ -72,7 +72,7 @@ to find the service in Redis (maybe due to data expiration), it falls back to th
 While the provided code snippets do not detail the load balancing mechanism, our architecture implements a Round
 Robin strategy for load balancing, allowing equal distribution of requests across 3-4 replicas of each service.
 
-### ~~~~5. Health Monitoring:
+### 5. Health Monitoring:
 
 
 Each critical component, i.e., the API Gateway and Service Discovery, has a health endpoint (/health). This endpoint
