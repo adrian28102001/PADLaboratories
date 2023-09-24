@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+
+package ApplicationManagement;
+
+service ApplicationService {
+  rpc GetJobApplications(GetJobApplicationsRequest) returns (GetJobApplicationsResponse);
+}
+
+message GetJobApplicationsRequest {
+  int32 jobId = 1;
+}
+
+message Application {
+  int32 candidateId = 1;
+  int32 jobOfferId = 2;
+  string appliedDate = 3;
+  string interviewDate = 4;
+  string feedback = 5;
+}
+
+message GetJobApplicationsResponse {
+  repeated Application applications = 1;
+}

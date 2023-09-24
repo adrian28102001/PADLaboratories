@@ -15,17 +15,15 @@ public static class RegisterDependencies
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IJobOfferService, JobOfferService>();
 
-        services.AddHttpClient("APIGateway", client =>
-        {
-            client.BaseAddress = new Uri("http://localhost:3000/jobmanagement");
-        });
-        
+        services.AddHttpClient("APIGateway",
+            client => { client.BaseAddress = new Uri("http://localhost:3000/jobmanagement"); });
+
         services.AddHealthChecks();
-        
+
         services.AddHealthChecks()
             .AddDbContextCheck<ApplicationDbContext>();
     }
-    
+
     public static async Task RegisterToServiceDiscovery(ConfigurationManager configurationManager)
     {
         var serviceConfig = configurationManager.GetSection("ServiceConfig").Get<ServiceConfiguration>();
@@ -34,30 +32,38 @@ public static class RegisterDependencies
             .Handle<HttpRequestException>()
             .WaitAndRetryForeverAsync(
                 retryAttempt => TimeSpan.FromSeconds(10),
-                (exception, timeSpan, context) => 
+                (exception, timeSpan, context) =>
                 {
-                    Console.WriteLine($"Failed to register with Service Discovery due to {exception.Message}. Waiting for 10 seconds before retrying...");
+                    Console.WriteLine(
+                        $"Failed to register with Service Discovery due to {exception.Message}. Waiting for 10 seconds before retrying...");
                 });
 
-        await retryPolicy.ExecuteAsync(async () => 
+        await retryPolicy.ExecuteAsync(async () =>
         {
-            using (var client = new HttpClient())
-            {
-                var response = await client.PostAsync($"{serviceConfig.DiscoveryUrl}/register", 
-                    new StringContent(JsonConvert.SerializeObject(new { 
-                        name = serviceConfig.ServiceName, 
-                        url = serviceConfig.ServiceUrl 
-                    }), Encoding.UTF8, "application/json"));
+            using var client = new HttpClient();
 
-                if (response.IsSuccessStatusCode)
+            var response = await client.PostAsync($"{serviceConfig.DiscoveryUrl}/register",
+                new StringContent(JsonConvert.SerializeObject(new
                 {
-                    Console.WriteLine("Successfully registered with Service Discovery!");
-                }
-                else
-                {
-                    throw new HttpRequestException($"Failed to register with Service Discovery. StatusCode: {response.StatusCode}");
-                }
+                    name = serviceConfig.ServiceName,
+                    url = serviceConfig.ServiceUrl,
+                    load = GetCurrentServiceLoad()
+                }), Encoding.UTF8, "application/json"));
+
+            if (response.IsSuccessStatusCode)
+            {
+                Console.WriteLine("Successfully registered with Service Discovery!");
+            }
+            else
+            {
+                throw new HttpRequestException(
+                    $"Failed to register with Service Discovery. StatusCode: {response.StatusCode}");
             }
         });
+    }
+
+    private static int GetCurrentServiceLoad()
+    {
+        return 100;
     }
 }

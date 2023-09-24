@@ -4,6 +4,7 @@ const app = express();
 const PORT = 4000;
 const https = require('https');
 const fs = require('fs');
+const { promisify } = require('util');
 
 const options = {
     key: fs.readFileSync('U:\\Keys\\key.pem'),
@@ -38,48 +39,48 @@ let services = {};
 app.use(express.json());
 
 app.post('/register', (req, res) => {
-    let {name, url} = req.body;
-    if (!name || !url) return res.status(400).send("Invalid registration details.");
+    let {name, url, load} = req.body;
+    if (!name || !url || load == null) return res.status(400).send("Invalid registration details.");
 
-    // Register the service in memory and in Redis
-    services[name] = url;
-    redisClient.set(name, url, 'EX', 300, (err) => {
+    services[name] = {name, url, load }; // Store the service in the services object
+
+    // Register the service in Redis with load information
+    redisClient.hmset(name, 'url', url, 'load', load, (err) => {
         if (err) {
             console.error("Error setting value in Redis:", err);
             return res.status(500).send("Internal server error.");
         }
-
-        console.log(`Service ${name} was registered having an address ${url}`);
+        redisClient.expire(name, 300); // Set expiry time for the service in Redis
+        console.log(`Service ${name} was registered having an address ${url} with load ${load}`);
         res.send("Service registered successfully");
     });
 });
 
 app.get('/discover/:name', (req, res) => {
-    let name = req.params.name;
+    let name = req.params.name.toLowerCase();
 
-    // First try to get the service from Redis
-    redisClient.get(name, (err, service) => {
-        if (err) {
-            console.error("Error getting value from Redis:", err);
-            return res.status(500).send("Internal server error.");
-        }
+    const hgetallAsync = promisify(redisClient.hgetall).bind(redisClient);
 
+    hgetallAsync(name).then(service => {
         if (service) {
-            res.send(service);
+            res.send(service.url);
         } else {
             service = services[name];
             if (!service) return res.status(404).send("Service not found.");
 
             // Cache the service in Redis
-            redisClient.set(name, service, 'EX', 300, (err) => {
+            redisClient.hmset(name, 'url', service.url, 'load', service.load, (err) => {
                 if (err) {
                     console.error("Error caching value in Redis:", err);
                     return res.status(500).send("Internal server error.");
                 }
-
-                res.send(service);
+                redisClient.expire(name, 300);
+                res.send(service.url);
             });
         }
+    }).catch(err => {
+        console.error("Error getting value from Redis:", err);
+        return res.status(500).send("Internal server error.");
     });
 });
 

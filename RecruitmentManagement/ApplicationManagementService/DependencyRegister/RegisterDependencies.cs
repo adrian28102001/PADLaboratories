@@ -58,7 +58,8 @@ public static class RegisterDependencies
                 new StringContent(JsonConvert.SerializeObject(new
                 {
                     name = serviceConfig.ServiceName,
-                    url = serviceConfig.ServiceUrl
+                    url = serviceConfig.ServiceUrl,
+                    load = GetCurrentServiceLoad()
                 }), Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
@@ -71,5 +72,10 @@ public static class RegisterDependencies
                     $"Failed to register with Service Discovery. StatusCode: {response.StatusCode}");
             }
         });
+    }
+
+    private static int GetCurrentServiceLoad()
+    {
+        return 100;
     }
 }
