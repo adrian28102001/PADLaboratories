@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-discovery-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: service-discovery
+  template:
+    metadata:
+      labels:
+        app: service-discovery
+    spec:
+      containers:
+        - name: service-discovery
+          image: service-discovery
+          ports:
+            - containerPort: 4000
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: service-discovery
+spec:
+  selector:
+    app: service-discovery
+  ports:
+    - protocol: TCP
+      port: 4000
+  type: LoadBalancer

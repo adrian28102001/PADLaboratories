@@ -1,4 +1,4 @@
-﻿using ApplicationManagementService.Configurations;
+﻿using JobManagementService.Configurations;
 
 namespace JobManagementService.Middleware;
 

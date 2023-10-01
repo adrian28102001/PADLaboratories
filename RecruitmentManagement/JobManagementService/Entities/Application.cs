@@ -1,6 +1,4 @@
-﻿using ApplicationManagementService.Entities.Enums;
-
-namespace JobManagementService.Entities;
+﻿namespace JobManagementService.Entities;
 
 public class Application
 {
