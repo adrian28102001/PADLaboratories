@@ -18,7 +18,7 @@ module.exports = {
         maxAge: 15 * 60 * 1000,
     },
     SSL_OPTIONS: {
-        key: fs.readFileSync('U:\\Keys\\key.pem'),
-        cert: fs.readFileSync('U:\\Keys\\cert.pem'),
+        key: fs.readFileSync('key.pem'),
+        cert: fs.readFileSync('cert.pem'),
     },
 };

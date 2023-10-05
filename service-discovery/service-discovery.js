@@ -7,8 +7,8 @@ const fs = require('fs');
 const { promisify } = require('util');
 
 const options = {
-    key: fs.readFileSync('U:\\Keys\\key.pem'),
-    cert: fs.readFileSync('U:\\Keys\\cert.pem')
+    key: fs.readFileSync('key.pem'),
+    cert: fs.readFileSync('cert.pem')
 };
 
 const redisClient = redis.createClient({

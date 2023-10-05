@@ -20,6 +20,10 @@ app.use(upload.any());
 app.use(monitorLoad);
 app.use(express.json());
 
+app.get('/health', (req, res) => {
+    res.status(200).send('API Gateway is healthy');
+});
+
 app.use('/', async (req, res) => {
     const serviceName = req.path.split('/')[1];
     const serviceCamelCaseName = `${serviceName.charAt(0).toUpperCase()}${serviceName.slice(1)}`;
@@ -62,10 +66,6 @@ app.use('/', async (req, res) => {
         }
         res.status(500).send(error.message);
     }
-});
-
-app.get('/health', (req, res) => {
-    res.status(200).send('API Gateway is healthy');
 });
 
 https.createServer(config.SSL_OPTIONS, app).listen(config.PORT, () => {

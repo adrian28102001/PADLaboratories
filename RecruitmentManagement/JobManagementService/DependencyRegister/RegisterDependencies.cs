@@ -5,6 +5,7 @@ using JobManagementService.Repositories;
 using JobManagementService.Services.JobOffer;
 using Newtonsoft.Json;
 using Polly;
+using JobManagementService.Factories; // Ensure you import the namespace for the custom factory
 
 namespace JobManagementService.DependencyRegister;
 
@@ -15,6 +16,9 @@ public static class RegisterDependencies
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IJobOfferService, JobOfferService>();
 
+        // Registering CustomHttpClientFactory for dependency injection
+        services.AddSingleton<IHttpClientFactory, CustomHttpClientFactory>();
+
         services.AddHttpClient("APIGateway",
             client => { client.BaseAddress = new Uri("http://localhost:3000/jobmanagement"); });
 
@@ -24,9 +28,14 @@ public static class RegisterDependencies
             .AddDbContextCheck<ApplicationDbContext>();
     }
 
-    public static async Task RegisterToServiceDiscovery(ConfigurationManager configurationManager)
+    public static async Task RegisterToServiceDiscovery(IServiceProvider serviceProvider, ConfigurationManager configurationManager)
     {
         var serviceConfig = configurationManager.GetSection("ServiceConfig").Get<ServiceConfiguration>();
+        
+        // Using the factory to create the client
+        var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
+        var client = httpClientFactory.CreateClient();
+        client.BaseAddress = new Uri(serviceConfig.DiscoveryUrl);
 
         var retryPolicy = Policy
             .Handle<HttpRequestException>()
@@ -40,9 +49,7 @@ public static class RegisterDependencies
 
         await retryPolicy.ExecuteAsync(async () =>
         {
-            using var client = new HttpClient();
-
-            var response = await client.PostAsync($"{serviceConfig.DiscoveryUrl}/register",
+            var response = await client.PostAsync("register",
                 new StringContent(JsonConvert.SerializeObject(new
                 {
                     name = serviceConfig.ServiceName,

@@ -28,11 +28,9 @@ public class Startup
         serviceCollection.AddControllersWithViews();
 
         RegisterDependencies.Register(serviceCollection);
-
-        await RegisterDependencies.RegisterToServiceDiscovery(_configurationManager);
     }
 
-    public void Configure(WebApplication app)
+    public async Task Configure(WebApplication app)
     {
         if (app.Environment.IsDevelopment())
         {
@@ -54,6 +52,8 @@ public class Startup
             endpoints.MapControllers();
         });
 
-        app.Run();
+        await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager);
+
+        await app.RunAsync();
     }
 }
