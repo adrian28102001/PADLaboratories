@@ -17,7 +17,7 @@ public static class RegisterDependencies
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         services.AddHttpClient("APIGateway",
-            client => { client.BaseAddress = new Uri("https://localhost:3000/jobmanagement"); });
+            client => { client.BaseAddress = new Uri("https://jobmanagementservice:7160/jobmanagement"); });
 
         services.AddHealthChecks();
 
@@ -40,6 +40,9 @@ public static class RegisterDependencies
         var client = httpClientFactory.CreateClient();
         client.BaseAddress = new Uri(serviceConfig.DiscoveryUrl);
 
+        // Logging the Discovery URL
+        Console.WriteLine($"Attempting to register with Service Discovery at URL: {client.BaseAddress}");
+
         var retryPolicy = Policy
             .Handle<HttpRequestException>()
             .WaitAndRetryForeverAsync(
@@ -53,13 +56,20 @@ public static class RegisterDependencies
 
         await retryPolicy.ExecuteAsync(async () =>
         {
+            var payload = new
+            {
+                name = serviceConfig.ServiceName,
+                url = serviceConfig.ServiceUrl,
+                load = GetCurrentServiceLoad()
+            };
+
+            // Logging the Service Name, Service URL, and Load
+            Console.WriteLine($"Service Name: {payload.name}");
+            Console.WriteLine($"Service URL: {payload.url}");
+            Console.WriteLine($"Service Load: {payload.load}");
+
             var response = await client.PostAsync("register",
-                new StringContent(JsonConvert.SerializeObject(new
-                {
-                    name = serviceConfig.ServiceName,
-                    url = serviceConfig.ServiceUrl,
-                    load = GetCurrentServiceLoad()
-                }), Encoding.UTF8, "application/json"));
+                new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {

@@ -12,7 +12,7 @@ const options = {
 };
 
 const redisClient = redis.createClient({
-    host: 'localhost',
+    host: 'redis',
     port: 6379,
     retry_strategy: function (options) {
         if (options.attempt > 10) {

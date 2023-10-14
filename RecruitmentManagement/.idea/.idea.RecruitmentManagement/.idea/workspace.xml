@@ -11,24 +11,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Configurations/ApiGateway.cs" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/RecruitmentManagement.sln" beforeDir="false" afterPath="$PROJECT_DIR$/RecruitmentManagement.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedLibrary/Models/ApplicationModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedLibrary/Models/Enums/ApplicationStatusModel.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedLibrary/Services/IEmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/IEmailService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedLibrary/Services/IFileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/IFileStorageService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/SharedLibrary/SharedLibrary.csproj" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../service-discovery/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-gateway/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../docker-compose.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../service-discovery/service-discovery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/service-discovery.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -136,7 +127,7 @@
       <ReportDescription localRun="true" path="C:\Users\gherm\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="0f2a23f3-6e1f-4ec0-ae82-6e431f2243c9" reportId="RecruitmentManagement/qodana/2023-10-01" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.JobManagementService/Dockerfile">
+  <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
     <configuration name="ApplicationManagementService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -318,7 +309,7 @@
       <workItem from="1696146615047" duration="1602000" />
       <workItem from="1697186091759" duration="1022000" />
       <workItem from="1697272778651" duration="71000" />
-      <workItem from="1697272910064" duration="3471000" />
+      <workItem from="1697272910064" duration="8363000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />

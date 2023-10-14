@@ -20,7 +20,7 @@ public static class RegisterDependencies
         services.AddSingleton<IHttpClientFactory, CustomHttpClientFactory>();
 
         services.AddHttpClient("APIGateway",
-            client => { client.BaseAddress = new Uri("http://localhost:3000/jobmanagement"); });
+            client => { client.BaseAddress = new Uri("https://jobmanagementservice:7160/jobmanagement"); });
 
         services.AddHealthChecks();
 
@@ -31,11 +31,11 @@ public static class RegisterDependencies
     public static async Task RegisterToServiceDiscovery(IServiceProvider serviceProvider, ConfigurationManager configurationManager)
     {
         var serviceConfig = configurationManager.GetSection("ServiceConfig").Get<ServiceConfiguration>();
-        
-        // Using the factory to create the client
         var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
         var client = httpClientFactory.CreateClient();
         client.BaseAddress = new Uri(serviceConfig.DiscoveryUrl);
+
+        Console.WriteLine($"Attempting to register with Service Discovery at URL: {client.BaseAddress}");
 
         var retryPolicy = Policy
             .Handle<HttpRequestException>()
@@ -49,13 +49,20 @@ public static class RegisterDependencies
 
         await retryPolicy.ExecuteAsync(async () =>
         {
+            var payload = new
+            {
+                name = serviceConfig.ServiceName,
+                url = serviceConfig.ServiceUrl,
+                load = GetCurrentServiceLoad()
+            };
+            
+            // Logging the Service Name, Service URL, and Load
+            Console.WriteLine($"Service Name: {payload.name}");
+            Console.WriteLine($"Service URL: {payload.url}");
+            Console.WriteLine($"Service Load: {payload.load}");
+            
             var response = await client.PostAsync("register",
-                new StringContent(JsonConvert.SerializeObject(new
-                {
-                    name = serviceConfig.ServiceName,
-                    url = serviceConfig.ServiceUrl,
-                    load = GetCurrentServiceLoad()
-                }), Encoding.UTF8, "application/json"));
+                new StringContent(JsonConvert.SerializeObject(payload), Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {

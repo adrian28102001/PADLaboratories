@@ -1,30 +1,10 @@
 version: '3.8'
 
 services:
-  applicationmanagementservice:
-    build:
-      context: ./RecruitmentManagement/ApplicationManagementService
-      dockerfile: Dockerfile
+  redis:
+    image: redis:latest
     ports:
-      - "5000:80"
-    networks:
-      - lab-network
-
-  jobmanagementservice:
-    build:
-      context: ./RecruitmentManagement/JobManagementService
-      dockerfile: Dockerfile
-    ports:
-      - "5001:81"
-    networks:
-      - lab-network
-
-  api-gateway:
-    build:
-      context: ./api-gateway
-      dockerfile: Dockerfile
-    ports:
-      - "5002:82" # Assuming this service runs on port 82 inside the container
+      - "6379:6379"
     networks:
       - lab-network
 
@@ -33,10 +13,75 @@ services:
       context: ./service-discovery
       dockerfile: Dockerfile
     ports:
-      - "5003:83" # Assuming this service runs on port 83 inside the container
+      - "5003:83"
+    networks:
+      - lab-network
+    depends_on:
+      - redis
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "5002:82"
+    networks:
+      - lab-network
+    depends_on:
+      - service-discovery
+
+  applicationmanagementservice:
+    build:
+      context: ./RecruitmentManagement/ApplicationManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "7200:443"
+    networks:
+      - lab-network
+    depends_on:
+      - api-gateway
+      - applicationmanagementdb  # Add dependency on the DB service
+
+  jobmanagementservice:
+    build:
+      context: ./RecruitmentManagement/JobManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5001:81"
+      - "7160:443"
+    networks:
+      - lab-network
+    depends_on:
+      - api-gateway
+      - jobmanagementdb  # Add dependency on the DB service
+
+  applicationmanagementdb:   # Add the Application Management DB service
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: applicationmanagement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - applicationmanagement-data:/var/lib/postgresql/data
+    networks:
+      - lab-network
+
+  jobmanagementdb:   # Add the Job Management DB service
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: jobmanagement
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - jobmanagement-data:/var/lib/postgresql/data
     networks:
       - lab-network
 
 networks:
   lab-network:
     driver: bridge
+
+volumes:
+  applicationmanagement-data:
+  jobmanagement-data:
