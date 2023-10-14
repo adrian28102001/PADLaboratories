@@ -13,8 +13,7 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
-# Expose port (assuming 3000 or change as per your config)
-EXPOSE 3000
+EXPOSE 82
 
 # Start the app
 CMD ["node", "api-gateway.js"]

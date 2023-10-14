@@ -11,12 +11,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.dockerignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-gateway/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../service-discovery/service-discovery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/service-discovery.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/Dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/RecruitmentManagement.sln" beforeDir="false" afterPath="$PROJECT_DIR$/RecruitmentManagement.sln" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/Models/ApplicationModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/Models/Enums/ApplicationStatusModel.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/Services/IEmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/IEmailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/Services/IFileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/IFileStorageService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SharedLibrary/SharedLibrary.csproj" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api-gateway/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../service-discovery/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/Dockerfile" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +136,7 @@
       <ReportDescription localRun="true" path="C:\Users\gherm\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="0f2a23f3-6e1f-4ec0-ae82-6e431f2243c9" reportId="RecruitmentManagement/qodana/2023-10-01" />
     </option>
   </component>
-  <component name="RunManager" selected=".NET Launch Settings Profile.JobManagementService">
+  <component name="RunManager" selected="Docker.JobManagementService/Dockerfile">
     <configuration name="ApplicationManagementService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -203,6 +215,7 @@
       <deployment type="dockerfile">
         <settings>
           <option name="imageTag" value="applicationmanagementservice" />
+          <option name="buildOnly" value="true" />
           <option name="containerName" value="applicationmanagementservice" />
           <option name="contextFolderPath" value="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement" />
           <option name="portBindings">
@@ -303,6 +316,9 @@
       <workItem from="1696145129657" duration="630000" />
       <workItem from="1696146353754" duration="226000" />
       <workItem from="1696146615047" duration="1602000" />
+      <workItem from="1697186091759" duration="1022000" />
+      <workItem from="1697272778651" duration="71000" />
+      <workItem from="1697272910064" duration="3471000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -344,10 +360,10 @@
           <line>64</line>
           <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="63" containingFunctionPresentation="Method 'PostApplication'">
             <startOffsets>
-              <option value="2040" />
+              <option value="2055" />
             </startOffsets>
             <endOffsets>
-              <option value="2104" />
+              <option value="2119" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="16" />
@@ -357,10 +373,10 @@
           <line>38</line>
           <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="38" containingFunctionPresentation="Method 'GetApplication'">
             <startOffsets>
-              <option value="1349" />
+              <option value="1364" />
             </startOffsets>
             <endOffsets>
-              <option value="1402" />
+              <option value="1417" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="29" />
@@ -370,10 +386,10 @@
           <line>32</line>
           <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="32" containingFunctionPresentation="Method 'GetApplications'">
             <startOffsets>
-              <option value="1190" />
+              <option value="1205" />
             </startOffsets>
             <endOffsets>
-              <option value="1233" />
+              <option value="1248" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="30" />
@@ -396,10 +412,10 @@
           <line>50</line>
           <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="50" containingFunctionPresentation="Method 'GetApplicationByJobId'">
             <startOffsets>
-              <option value="1652" />
+              <option value="1667" />
             </startOffsets>
             <endOffsets>
-              <option value="1690" />
+              <option value="1705" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="33" />
@@ -409,26 +425,13 @@
           <line>82</line>
           <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService.Tests\ApplicationControllerTests.cs" initialLine="82" containingFunctionPresentation="Method 'PostApplication_ReturnsCreatedAtAction_SendsEmail'">
             <startOffsets>
-              <option value="2811" />
+              <option value="2826" />
             </startOffsets>
             <endOffsets>
-              <option value="2924" />
+              <option value="2939" />
             </endOffsets>
           </properties>
           <option name="timeStamp" value="34" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs</url>
-          <line>12</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Services\EmailService.cs" initialLine="12" containingFunctionPresentation="Method 'SendEmailWithAttachmentAsync'">
-            <startOffsets>
-              <option value="320" />
-            </startOffsets>
-            <endOffsets>
-              <option value="524" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

@@ -1,18 +1,20 @@
-﻿# Use the official Microsoft .NET SDK image to build
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
+EXPOSE 81
+EXPOSE 443
 
-# Copy everything and restore
-COPY . ./
-RUN dotnet restore JobManagementService/JobManagementService.csproj
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["JobManagementService.csproj", "JobManagementService/"]
+RUN dotnet restore "JobManagementService/JobManagementService.csproj"
+COPY . JobManagementService
+WORKDIR "/src/JobManagementService"
+RUN dotnet build "JobManagementService.csproj" -c Release -o /app/build
 
-# Publish
-WORKDIR /app/JobManagementService
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish "JobManagementService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Use the official Microsoft ASP.NET Core runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/JobManagementService/out .
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "JobManagementService.dll"]

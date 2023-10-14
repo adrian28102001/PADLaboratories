@@ -2,10 +2,10 @@
 using ApplicationManagementService.Extensions;
 using ApplicationManagementService.Models;
 using ApplicationManagementService.Repositories;
+using ApplicationManagementService.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using SharedLibrary.Services;
 
 namespace ApplicationManagementService.Controllers;
 

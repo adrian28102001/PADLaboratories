@@ -1,4 +1,4 @@
-﻿namespace SharedLibrary.Services;
+﻿namespace ApplicationManagementService.Services;
 
 public interface IEmailService
 {

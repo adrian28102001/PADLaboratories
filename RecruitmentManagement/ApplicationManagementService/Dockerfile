@@ -1,18 +1,20 @@
-﻿# Use the official Microsoft .NET SDK image to build
-FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+﻿FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
 WORKDIR /app
+EXPOSE 80
+EXPOSE 443
 
-# Copy everything and restore
-COPY . ./
-RUN dotnet restore ApplicationManagementService/ApplicationManagementService.csproj
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["ApplicationManagementService.csproj", "ApplicationManagementService/"]
+RUN dotnet restore "ApplicationManagementService/ApplicationManagementService.csproj"
+COPY . ApplicationManagementService
+WORKDIR "/src/ApplicationManagementService"
+RUN dotnet build "ApplicationManagementService.csproj" -c Release -o /app/build
 
-# Publish
-WORKDIR /app/ApplicationManagementService
-RUN dotnet publish -c Release -o out
+FROM build AS publish
+RUN dotnet publish "ApplicationManagementService.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
-# Use the official Microsoft ASP.NET Core runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
+FROM base AS final
 WORKDIR /app
-COPY --from=build-env /app/ApplicationManagementService/out .
-
+COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "ApplicationManagementService.dll"]

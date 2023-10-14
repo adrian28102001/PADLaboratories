@@ -34,11 +34,6 @@
 
 
     <ItemGroup>
-      <ProjectReference Include="..\SharedLibrary\SharedLibrary.csproj" />
-    </ItemGroup>
-
-
-    <ItemGroup>
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>

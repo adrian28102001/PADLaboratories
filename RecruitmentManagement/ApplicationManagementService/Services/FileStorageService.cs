@@ -1,6 +1,4 @@
-﻿using SharedLibrary.Services;
-
-namespace ApplicationManagementService.Services;
+﻿namespace ApplicationManagementService.Services;
 
 public class FileStorageService : IFileStorageService
 {

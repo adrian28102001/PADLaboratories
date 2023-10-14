@@ -7,7 +7,6 @@ using ApplicationManagementService.Repositories;
 using ApplicationManagementService.Services;
 using Newtonsoft.Json;
 using Polly;
-using SharedLibrary.Services;
 
 namespace ApplicationManagementService.DependencyRegister;
 

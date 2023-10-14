@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-
-namespace SharedLibrary.Services;
+﻿namespace ApplicationManagementService.Services;
 
 public interface IFileStorageService
 {

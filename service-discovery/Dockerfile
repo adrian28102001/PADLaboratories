@@ -13,8 +13,7 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
-# Expose port (assuming 4000 or change as per your script)
-EXPOSE 4000
+EXPOSE 83
 
 # Start the app
 CMD ["node", "service-discovery.js"]

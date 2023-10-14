@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Mail;
-using SharedLibrary.Services;
 
 namespace ApplicationManagementService.Services;
 
@@ -10,11 +9,9 @@ public class EmailService : IEmailService
     {
         try
         {
-            using var client = new SmtpClient("smtp.server.com")
-            {
-                UseDefaultCredentials = false,
-                Credentials = new NetworkCredential("username", "password")
-            };
+            using var client = new SmtpClient("smtp.server.com");
+            client.UseDefaultCredentials = false;
+            client.Credentials = new NetworkCredential("username", "password");
 
             var mailMessage = new MailMessage
             {

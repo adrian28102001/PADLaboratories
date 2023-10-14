@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  applicationmanagementservice:
+    build:
+      context: ./RecruitmentManagement/ApplicationManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+    networks:
+      - lab-network
+
+  jobmanagementservice:
+    build:
+      context: ./RecruitmentManagement/JobManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5001:81"
+    networks:
+      - lab-network
+
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: Dockerfile
+    ports:
+      - "5002:82" # Assuming this service runs on port 82 inside the container
+    networks:
+      - lab-network
+
+  service-discovery:
+    build:
+      context: ./service-discovery
+      dockerfile: Dockerfile
+    ports:
+      - "5003:83" # Assuming this service runs on port 83 inside the container
+    networks:
+      - lab-network
+
+networks:
+  lab-network:
+    driver: bridge
