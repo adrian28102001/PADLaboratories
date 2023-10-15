@@ -13,7 +13,8 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
-EXPOSE 82
+EXPOSE 80
+EXPOSE 443
 
 # Start the app
 CMD ["node", "api-gateway.js"]
