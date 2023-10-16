@@ -13,8 +13,7 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
-EXPOSE 80
-EXPOSE 443
+EXPOSE 4000
 
 # Start the app
 CMD ["node", "service-discovery.js"]

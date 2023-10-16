@@ -2,6 +2,7 @@
 using JobManagementService.DependencyRegister;
 using JobManagementService.Middleware;
 using Microsoft.EntityFrameworkCore;
+using Polly;
 
 namespace JobManagementService;
 
@@ -14,7 +15,7 @@ public class Startup
         _configurationManager = configurationManager;
     }
 
-    public async Task ConfigureServices(IServiceCollection serviceCollection)
+    public void ConfigureServices(IServiceCollection serviceCollection)
     {
         // Add services to the container.
         var connectionString = _configurationManager.GetConnectionString("DefaultConnection");
@@ -28,6 +29,35 @@ public class Startup
         serviceCollection.AddControllersWithViews();
 
         RegisterDependencies.Register(serviceCollection);
+    }
+
+    private void ApplyMigrations(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var services = scope.ServiceProvider;
+
+        try
+        {
+            var policy = Policy.Handle<Exception>()
+                .WaitAndRetry(new[]
+                {
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10),
+                    TimeSpan.FromSeconds(15),
+                });
+
+            policy.Execute(() =>
+            {
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            });
+
+            Console.WriteLine("Migrated inventory db");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while migrating the inventory database {ex}");
+        }
     }
 
     public async Task Configure(WebApplication app)
@@ -45,7 +75,7 @@ public class Startup
 
         app.UseMiddleware<TimeoutMiddleware>(TimeSpan.FromSeconds(10)); // 10 seconds timeout
         app.UseMiddleware<ConcurrencyMiddleware>(); // Handle concurrency
-        
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHealthChecks("/status");
@@ -53,6 +83,8 @@ public class Startup
         });
 
         await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager);
+
+        ApplyMigrations(app.Services);
 
         await app.RunAsync();
     }

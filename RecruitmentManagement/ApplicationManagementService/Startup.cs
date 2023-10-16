@@ -1,10 +1,8 @@
-﻿using System.Text;
-using ApplicationManagementService.Configurations;
-using ApplicationManagementService.Context;
+﻿using ApplicationManagementService.Context;
 using ApplicationManagementService.DependencyRegister;
 using ApplicationManagementService.Middleware;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
+using Polly;
 
 namespace ApplicationManagementService;
 
@@ -32,6 +30,35 @@ public class Startup
         RegisterDependencies.Register(serviceCollection, _configurationManager);
     }
 
+    private void ApplyMigrations(IServiceProvider serviceProvider)
+    {
+        using var scope = serviceProvider.CreateScope();
+        var services = scope.ServiceProvider;
+
+        try
+        {
+            var policy = Policy.Handle<Exception>()
+                .WaitAndRetry(new[]
+                {
+                    TimeSpan.FromSeconds(5),
+                    TimeSpan.FromSeconds(10),
+                    TimeSpan.FromSeconds(15),
+                });
+
+            policy.Execute(() =>
+            {
+                var context = services.GetRequiredService<ApplicationDbContext>();
+                context.Database.Migrate();
+            });
+
+            Console.WriteLine("Migrated inventory db");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while migrating the inventory database {ex}");
+        }
+    }
+
     public async Task Configure(WebApplication app)
     {
         if (app.Environment.IsDevelopment())
@@ -55,8 +82,10 @@ public class Startup
         });
 
         // Call RegisterToServiceDiscovery after the app configuration.
-        await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager);
-
+        await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager); 
+        
+        ApplyMigrations(app.Services);
+        
         await app.RunAsync();
     }
 }
