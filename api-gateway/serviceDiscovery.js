@@ -1,10 +1,7 @@
 const axios = require('axios');
-const https = require('https');
-const { SERVICE_DISCOVERY_URL } = require('./config');
+const {SERVICE_DISCOVERY_URL} = require('./config');
 const CircuitBreaker = require('./circuitBreaker');
 const config = require("./config");
-
-const httpsAgent = new https.Agent({ rejectUnauthorized: false });
 
 const circuitBreaker = new CircuitBreaker(
     config.TIMEOUT_LIMIT,
@@ -17,9 +14,7 @@ const circuitBreaker = new CircuitBreaker(
 
 const discoverService = async (serviceName) => {
     try {
-        const { data } = await circuitBreaker.call(() => axios.get(`${SERVICE_DISCOVERY_URL}/discover/${serviceName}`, {
-            httpsAgent,
-        }));
+        const {data} = await circuitBreaker.call(() => axios.get(`${SERVICE_DISCOVERY_URL}/discover/${serviceName}`));
 
         if (!data) throw new Error('Service not found');
         return data;

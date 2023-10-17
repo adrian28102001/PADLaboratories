@@ -20,7 +20,7 @@ public static class RegisterDependencies
         services.AddSingleton<IHttpClientFactory, CustomHttpClientFactory>();
 
         services.AddHttpClient("APIGateway",
-            client => { client.BaseAddress = new Uri("https://jobmanagementservice:7160/jobmanagement"); });
+            client => { client.BaseAddress = new Uri("https://jobmanagementservice:5062/jobmanagement"); });
 
         services.AddHealthChecks();
 

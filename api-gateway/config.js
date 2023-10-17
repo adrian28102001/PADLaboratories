@@ -2,7 +2,7 @@ const fs = require('fs');
 
 module.exports = {
     PORT: 3000,
-    SERVICE_DISCOVERY_URL: 'https://service-discovery:4000',
+    SERVICE_DISCOVERY_URL: 'http://service-discovery:4000',
     CRITICAL_LOAD_THRESHOLD: 60,
     TIMEOUT_LIMIT: 5000,
     FAILURE_THRESHOLD: 3,
