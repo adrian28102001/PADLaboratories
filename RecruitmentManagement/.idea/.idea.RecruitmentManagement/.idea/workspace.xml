@@ -12,14 +12,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService.Tests/UnitTest1.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Models/EmailSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Models/EmailSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-gateway/api-gateway.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/api-gateway.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-gateway/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-gateway/serviceDiscovery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/serviceDiscovery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../service-discovery/service-discovery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/service-discovery.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +125,7 @@
       <ReportDescription localRun="true" path="C:\Users\gherm\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="0f2a23f3-6e1f-4ec0-ae82-6e431f2243c9" reportId="RecruitmentManagement/qodana/2023-10-01" />
     </option>
   </component>
-  <component name="RunManager" selected="Docker.ApplicationManagementService/Dockerfile">
+  <component name="RunManager" selected=".NET Launch Settings Profile.ApplicationManagementService">
     <configuration name="ApplicationManagementService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -314,7 +312,7 @@
       <workItem from="1697386114459" duration="1289000" />
       <workItem from="1697387898733" duration="1174000" />
       <workItem from="1697469165472" duration="3507000" />
-      <workItem from="1697566823996" duration="1562000" />
+      <workItem from="1697566823996" duration="4125000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -415,19 +413,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="33" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs</url>
-          <line>82</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService.Tests\ApplicationControllerTests.cs" initialLine="82" containingFunctionPresentation="Method 'PostApplication_ReturnsCreatedAtAction_SendsEmail'">
-            <startOffsets>
-              <option value="2826" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2939" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

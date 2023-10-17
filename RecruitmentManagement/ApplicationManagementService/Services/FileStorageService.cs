@@ -1,22 +1,29 @@
-﻿namespace ApplicationManagementService.Services;
-
-public class FileStorageService : IFileStorageService
+﻿namespace ApplicationManagementService.Services
 {
-    public async Task<string> SaveFileAsync(IFormFile file)
+    public class FileStorageService : IFileStorageService
     {
-        var filePath = "";
-        try
+        public async Task<string> SaveFileAsync(IFormFile file)
         {
-            var directoryPath = "U:\\FourthYear\\Sem1\\PAD\\Labs\\Lab1\\RecruitmentManagement\\FileStorage";
-            filePath = Path.Combine(directoryPath, file.FileName);
-            await using var stream = File.Create(filePath);
-            await file.CopyToAsync(stream);
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Failed save pdf file. Exception: {ex.Message}");
-        }
+            var filePath = "";
+            try
+            {
+                // Use Path.Combine to create paths and let it decide the appropriate directory separator.
+                var directoryPath = Path.Combine("RecruitmentManagement", "FileStorage");
 
-        return filePath;
+                // Ensure the directory exists before saving the file.
+                Directory.CreateDirectory(directoryPath);
+
+                filePath = Path.Combine(directoryPath, file.FileName);
+
+                await using var stream = File.Create(filePath);
+                await file.CopyToAsync(stream);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Failed save pdf file. Exception: {ex.Message}");
+            }
+
+            return filePath;
+        }
     }
 }

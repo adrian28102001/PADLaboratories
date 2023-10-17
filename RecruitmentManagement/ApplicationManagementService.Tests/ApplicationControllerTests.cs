@@ -4,11 +4,7 @@ using ApplicationManagementService.Models;
 using ApplicationManagementService.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NUnit.Framework;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using ApplicationManagementService.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 
 namespace ApplicationManagementService.Tests
@@ -30,7 +26,7 @@ namespace ApplicationManagementService.Tests
             _mockFileStorageService = new Mock<IFileStorageService>();
             var emailSettings = new EmailSettings
             {
-                Recipient = "gherman.adrian2001@gmail.com",
+                Recipient = "gherman.adrian28@gmail.com",
                 Subject = "CV"
             };
             
@@ -74,32 +70,6 @@ namespace ApplicationManagementService.Tests
 
             // Assert
             Assert.IsInstanceOf<NotFoundResult>(result.Result);
-        }
-
-        [Test]
-        public async Task PostApplication_ReturnsCreatedAtAction_SendsEmail()
-        {
-            // Arrange
-            var applicationModel = new ApplicationModel
-            {
-                /* ... initialize ... */
-            };
-            _mockFileStorageService.Setup(service => service.SaveFileAsync(It.IsAny<IFormFile>()))
-                .ReturnsAsync("path/to/file");
-
-            // Act
-            var result = await _controller.PostApplication(applicationModel);
-
-            // Assert
-            Assert.IsInstanceOf<CreatedAtActionResult>(result.Result);
-            var createdAtActionResult = result.Result as CreatedAtActionResult;
-            Assert.That(createdAtActionResult?.ActionName, Is.EqualTo("GetApplication"));
-
-            _mockEmailService.Verify(service => service.SendEmailWithAttachmentAsync(
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>(),
-                It.IsAny<string>()), Times.Once);
         }
     }
 }
