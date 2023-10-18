@@ -94,6 +94,7 @@ app.use('/', async (req, res) => {
         }
 
         const {data, status} = await axios(config);
+        console.log(`Forwarded request to service: ${serviceName} at URL: ${serviceURL}`);
         res.status(status).send(data);
     } catch (error) {
         console.error('Error calling service:', error);

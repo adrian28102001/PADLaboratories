@@ -13,9 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -330,7 +327,8 @@
       <workItem from="1697387898733" duration="1174000" />
       <workItem from="1697469165472" duration="3507000" />
       <workItem from="1697566823996" duration="4340000" />
-      <workItem from="1697624701701" duration="4539000" />
+      <workItem from="1697624701701" duration="4908000" />
+      <workItem from="1697646264877" duration="366000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -433,14 +431,7 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/TestingEmail/Program.cs</url>
           <line>23</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\TestingEmail\Program.cs" initialLine="23" containingFunctionPresentation="Method 'Main'">
-            <startOffsets>
-              <option value="535" />
-            </startOffsets>
-            <endOffsets>
-              <option value="769" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\TestingEmail\Program.cs" initialLine="23" containingFunctionPresentation="Method 'Main'" />
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
