@@ -19,6 +19,9 @@ public static class RegisterDependencies
         // Registering CustomHttpClientFactory for dependency injection
         services.AddSingleton<IHttpClientFactory, CustomHttpClientFactory>();
 
+        services.AddHttpClient("APIGateway",
+            client => { client.BaseAddress = new Uri("http://jobmanagementservice:5062/jobmanagement"); });
+
         services.AddHealthChecks();
 
         services.AddHealthChecks()
