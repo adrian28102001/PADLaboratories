@@ -4,7 +4,7 @@ const app = express();
 const PORT = 4000;
 const { promisify } = require('util');
 const redisClient = redis.createClient({
-    host: 'redis',
+    host: 'localhost',
     port: 6379,
     retry_strategy: function (options) {
         if (options.attempt > 10) {
