@@ -67,7 +67,7 @@ public class Startup
             // Potentially add any dev-specific middlewares like UseDeveloperExceptionPage here.
         }
 
-        app.UseHttpsRedirection();
+        app.UseHsts();
 
         app.UseRouting();
 

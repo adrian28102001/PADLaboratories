@@ -66,7 +66,7 @@ public class Startup
             // Potentially add any dev-specific middlewares like UseDeveloperExceptionPage here.
         }
 
-        app.UseHttpsRedirection();
+        app.UseHsts();
 
         app.UseRouting();
 
@@ -82,9 +82,9 @@ public class Startup
         });
 
         // Call RegisterToServiceDiscovery after the app configuration.
-        // await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager); 
+        await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager); 
         
-        // ApplyMigrations(app.Services);
+        ApplyMigrations(app.Services);
         
         await app.RunAsync();
     }

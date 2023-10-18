@@ -13,9 +13,6 @@
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
@@ -333,7 +330,7 @@
       <workItem from="1697387898733" duration="1174000" />
       <workItem from="1697469165472" duration="3507000" />
       <workItem from="1697566823996" duration="4340000" />
-      <workItem from="1697624701701" duration="2405000" />
+      <workItem from="1697624701701" duration="4539000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -458,6 +455,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="39" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
+          <line>64</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="64" containingFunctionPresentation="Method 'PostApplication'">
+            <startOffsets>
+              <option value="2055" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2119" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="41" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
