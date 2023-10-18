@@ -5,6 +5,7 @@
     <projectFile profileName="IIS Express">ApplicationManagementService/ApplicationManagementService.csproj</projectFile>
     <projectFile profileName="IIS Express">JobManagementService/JobManagementService.csproj</projectFile>
     <projectFile profileName="JobManagementService">JobManagementService/JobManagementService.csproj</projectFile>
+    <projectFile>TestingEmail/TestingEmail.csproj</projectFile>
   </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
@@ -12,12 +13,9 @@
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService.Tests/ApplicationControllerTests.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService.Tests/UnitTest1.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Models/EmailSettings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Models/EmailSettings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/EmailService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/FileStorageService.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Services/IEmailService.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Services/IEmailService.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,6 +124,24 @@
     </option>
   </component>
   <component name="RunManager" selected=".NET Launch Settings Profile.ApplicationManagementService">
+    <configuration name="TestingEmail" type="DotNetProject" factoryName=".NET Project">
+      <option name="EXE_PATH" value="" />
+      <option name="PROGRAM_PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="PASS_PARENT_ENVS" value="1" />
+      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="PROJECT_PATH" value="$PROJECT_DIR$/TestingEmail/TestingEmail.csproj" />
+      <option name="PROJECT_EXE_PATH_TRACKING" value="1" />
+      <option name="PROJECT_ARGUMENTS_TRACKING" value="1" />
+      <option name="PROJECT_WORKING_DIRECTORY_TRACKING" value="1" />
+      <option name="PROJECT_KIND" value="DotNetCore" />
+      <option name="PROJECT_TFM" value="" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="ApplicationManagementService" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/ApplicationManagementService/ApplicationManagementService.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net6.0" />
@@ -312,7 +328,8 @@
       <workItem from="1697386114459" duration="1289000" />
       <workItem from="1697387898733" duration="1174000" />
       <workItem from="1697469165472" duration="3507000" />
-      <workItem from="1697566823996" duration="4125000" />
+      <workItem from="1697566823996" duration="4340000" />
+      <workItem from="1697624701701" duration="1347000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -413,6 +430,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="33" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/TestingEmail/Program.cs</url>
+          <line>23</line>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\TestingEmail\Program.cs" initialLine="23" containingFunctionPresentation="Method 'Main'">
+            <startOffsets>
+              <option value="535" />
+            </startOffsets>
+            <endOffsets>
+              <option value="769" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="34" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

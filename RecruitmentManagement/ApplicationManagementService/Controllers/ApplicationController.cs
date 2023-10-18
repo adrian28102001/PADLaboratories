@@ -69,7 +69,6 @@ public class ApplicationController : ControllerBase
 
             await _emailService.SendEmailWithAttachmentAsync(
                 _emailSettings.Recipient,
-                _emailSettings.Subject,
                 $"New application received from CandidateId: {application.CandidateId} for JobOfferId: {application.JobOfferId}",
                 filePath
             );

@@ -14,19 +14,23 @@ public class EmailService : IEmailService
         _emailSettings = emailSettings.Value;
     }
     
-    public async Task SendEmailWithAttachmentAsync(string to, string subject, string body, string attachmentPath)
+    public async Task SendEmailWithAttachmentAsync(string to, string body, string attachmentPath)
     {
         try
         {
-            using var client = new SmtpClient("smtp.server.com");
-            client.UseDefaultCredentials = false;
-            client.Credentials = new NetworkCredential(_emailSettings.User, _emailSettings.Password);
+            using var client = new SmtpClient("smtp.gmail.com")
+            {
+                Port = 587,
+                EnableSsl = true,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential(_emailSettings.User, _emailSettings.Password)
+            };
 
             var mailMessage = new MailMessage
             {
                 To = { new MailAddress(_emailSettings.Recipient) },
                 From = new MailAddress(_emailSettings.User),
-                Subject = subject,
+                Subject = _emailSettings.Subject,
                 Body = body,
                 IsBodyHtml = true,
             };
