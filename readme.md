@@ -96,3 +96,4 @@ GET /jobmanagement/api/jobs/applications/{jobId}: Retrieves a job application fo
 GET /jobmanagement/api/joboffers/{id}: Retrieves a specific job offer by its ID.
 
 https://documenter.getpostman.com/view/18378097/2s9YCARAm5
+Docker link: docker.io/adriangherman2001/lab1-api-gateway
