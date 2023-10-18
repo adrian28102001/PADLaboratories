@@ -13,16 +13,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Factories/CustomHttpClientFactory.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Factories/CustomHttpClientFactory.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api-gateway/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/DependencyRegister/RegisterDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../service-discovery/service-discovery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/service-discovery.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +102,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
     "XThreadsFramesViewSplitterKey": "0.6328767",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "deploy",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

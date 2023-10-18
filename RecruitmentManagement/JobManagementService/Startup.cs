@@ -84,7 +84,7 @@ public class Startup
 
         await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager);
 
-        // ApplyMigrations(app.Services);
+        ApplyMigrations(app.Services);
 
         await app.RunAsync();
     }

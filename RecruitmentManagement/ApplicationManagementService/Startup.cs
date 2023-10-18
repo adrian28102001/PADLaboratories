@@ -84,7 +84,7 @@ public class Startup
         // Call RegisterToServiceDiscovery after the app configuration.
         await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager); 
         
-        // ApplyMigrations(app.Services);
+        ApplyMigrations(app.Services);
         
         await app.RunAsync();
     }
