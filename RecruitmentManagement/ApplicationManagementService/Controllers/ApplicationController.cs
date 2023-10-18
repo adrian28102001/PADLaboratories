@@ -66,17 +66,29 @@ public class ApplicationController : ControllerBase
         {
             var filePath = await _fileStorageService.SaveFileAsync(application.CVFile);
             application.CVPath = filePath;
-
-            await _emailService.SendEmailWithAttachmentAsync(
-                _emailSettings.Recipient,
-                $"New application received from CandidateId: {application.CandidateId} for JobOfferId: {application.JobOfferId}",
-                filePath
-            );
         }
 
         await _repository.AddAsync(application.ToModel());
+
+        if (application.CVFile != null && application.CVFile.Length > 0)
+        {
+            Task.Run(() => _emailService.SendEmailWithAttachmentAsync(
+                _emailSettings.Recipient,
+                $"New application received from CandidateId: {application.CandidateId} for JobOfferId: {application.JobOfferId}",
+                application.CVPath
+            )).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Console.WriteLine($"Failed to send email. Exception: {task.Exception?.InnerException?.Message}");
+                }
+            });
+        }
+
+
         return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
     }
+
 
     [HttpPut("{id}")]
     public async Task<IActionResult> PutApplication(int id, Application application)

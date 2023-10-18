@@ -13,7 +13,8 @@
                 // Ensure the directory exists before saving the file.
                 Directory.CreateDirectory(directoryPath);
 
-                filePath = Path.Combine(directoryPath, file.FileName);
+                var uniqueFileName = $"{Guid.NewGuid()}_{file.FileName}";
+                filePath = Path.Combine(directoryPath, uniqueFileName);
 
                 await using var stream = File.Create(filePath);
                 await file.CopyToAsync(stream);

@@ -77,14 +77,14 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapHealthChecks("/status");
+            endpoints.MapHealthChecks("/health");
             endpoints.MapControllers();
         });
 
         // Call RegisterToServiceDiscovery after the app configuration.
-        await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager); 
+        // await RegisterDependencies.RegisterToServiceDiscovery(app.Services, _configurationManager); 
         
-        ApplyMigrations(app.Services);
+        // ApplyMigrations(app.Services);
         
         await app.RunAsync();
     }

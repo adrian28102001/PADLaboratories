@@ -78,7 +78,7 @@ public class Startup
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapHealthChecks("/status");
+            endpoints.MapHealthChecks("/health");
             endpoints.MapControllers();
         });
 
