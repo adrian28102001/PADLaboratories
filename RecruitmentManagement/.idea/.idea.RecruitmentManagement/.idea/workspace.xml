@@ -28,6 +28,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -333,6 +338,7 @@
       <workItem from="1697624701701" duration="4908000" />
       <workItem from="1697646264877" duration="2257000" />
       <workItem from="1697724268096" duration="453000" />
+      <workItem from="1697695729463" duration="112000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -383,53 +389,25 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>38</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="38" containingFunctionPresentation="Method 'GetApplication'">
-            <startOffsets>
-              <option value="1364" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1417" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="38" containingFunctionPresentation="Method 'GetApplication'" />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>32</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="32" containingFunctionPresentation="Method 'GetApplications'">
-            <startOffsets>
-              <option value="1205" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1248" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="32" containingFunctionPresentation="Method 'GetApplications'" />
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/JobManagementService/Controllers/ApplicationController.cs</url>
           <line>21</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\ApplicationController.cs" initialLine="21" containingFunctionPresentation="Method 'GetJobApplications'">
-            <startOffsets>
-              <option value="574" />
-            </startOffsets>
-            <endOffsets>
-              <option value="677" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\ApplicationController.cs" initialLine="21" containingFunctionPresentation="Method 'GetJobApplications'" />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>50</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="50" containingFunctionPresentation="Method 'GetApplicationByJobId'">
-            <startOffsets>
-              <option value="1667" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1705" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="50" containingFunctionPresentation="Method 'GetApplicationByJobId'" />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
@@ -441,27 +419,13 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>64</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="64" containingFunctionPresentation="Method 'PostApplication'">
-            <startOffsets>
-              <option value="2055" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2119" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="64" containingFunctionPresentation="Method 'PostApplication'" />
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs</url>
           <line>19</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\JobOfferController.cs" initialLine="19" containingFunctionPresentation="Method 'GetJobById'">
-            <startOffsets>
-              <option value="526" />
-            </startOffsets>
-            <endOffsets>
-              <option value="571" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\JobOfferController.cs" initialLine="19" containingFunctionPresentation="Method 'GetJobById'" />
           <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
