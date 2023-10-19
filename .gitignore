@@ -7,6 +7,8 @@ riderModule.iml
 # Edit at https://www.toptal.com/developers/gitignore?templates=dotnetcore,rider
 /RecruitmentManagement/.idea/
 .idea
+idea
+/idea
 ### DotnetCore ###
 # .NET Core build folders
 bin/
@@ -416,3 +418,4 @@ fabric.properties
 # End of https://www.toptal.com/developers/gitignore/api/node,webstorm,webstorm+all
 RecruitmentManagement/.idea/.idea.RecruitmentManagement/.idea/workspace.xml
 *.pdf
+RecruitmentManagement/.idea/.idea.RecruitmentManagement/.idea/workspace.xml
