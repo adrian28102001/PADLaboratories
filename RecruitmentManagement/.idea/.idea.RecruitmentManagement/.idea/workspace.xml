@@ -14,10 +14,7 @@
     <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.RecruitmentManagement/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/JobManagementService/Startup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/Startup.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api-gateway/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/../api-gateway/config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../service-discovery/service-discovery.js" beforeDir="false" afterPath="$PROJECT_DIR$/../service-discovery/service-discovery.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,6 +29,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -96,33 +98,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "XThreadsFramesViewSplitterKey": "0.6328767",
-    "git-widget-placeholder": "deploy",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "http.certificates",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;XThreadsFramesViewSplitterKey&quot;: &quot;0.6328767&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;deploy&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;http.certificates&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File": [
-      "TEXT"
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;TEXT&quot;
     ],
-    "rider.external.source.directories": [
-      "C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
-      "C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
-      "C:\\Users\\gherm\\AppData\\Local\\Symbols\\src"
+    &quot;rider.external.source.directories&quot;: [
+      &quot;C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
+      &quot;C:\\Users\\gherm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
+      &quot;C:\\Users\\gherm\\AppData\\Local\\Symbols\\src&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="QodanaReportsService">
     <option name="descriptions">
       <ReportDescription localRun="true" path="C:\Users\gherm\AppData\Local\Temp\qodana_output\qodana.sarif.json" reportGuid="0f2a23f3-6e1f-4ec0-ae82-6e431f2243c9" reportId="RecruitmentManagement/qodana/2023-10-01" />
@@ -336,6 +338,7 @@
       <workItem from="1697566823996" duration="4340000" />
       <workItem from="1697624701701" duration="4908000" />
       <workItem from="1697646264877" duration="2257000" />
+      <workItem from="1697695729463" duration="112000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
@@ -386,53 +389,25 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>38</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="38" containingFunctionPresentation="Method 'GetApplication'">
-            <startOffsets>
-              <option value="1364" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1417" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="38" containingFunctionPresentation="Method 'GetApplication'" />
           <option name="timeStamp" value="29" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>32</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="32" containingFunctionPresentation="Method 'GetApplications'">
-            <startOffsets>
-              <option value="1205" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1248" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="32" containingFunctionPresentation="Method 'GetApplications'" />
           <option name="timeStamp" value="30" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/JobManagementService/Controllers/ApplicationController.cs</url>
           <line>21</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\ApplicationController.cs" initialLine="21" containingFunctionPresentation="Method 'GetJobApplications'">
-            <startOffsets>
-              <option value="574" />
-            </startOffsets>
-            <endOffsets>
-              <option value="677" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\ApplicationController.cs" initialLine="21" containingFunctionPresentation="Method 'GetJobApplications'" />
           <option name="timeStamp" value="31" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>50</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="50" containingFunctionPresentation="Method 'GetApplicationByJobId'">
-            <startOffsets>
-              <option value="1667" />
-            </startOffsets>
-            <endOffsets>
-              <option value="1705" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="50" containingFunctionPresentation="Method 'GetApplicationByJobId'" />
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
@@ -444,27 +419,13 @@
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/ApplicationManagementService/Controllers/ApplicationController.cs</url>
           <line>64</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="64" containingFunctionPresentation="Method 'PostApplication'">
-            <startOffsets>
-              <option value="2055" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2119" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\ApplicationManagementService\Controllers\ApplicationController.cs" initialLine="64" containingFunctionPresentation="Method 'PostApplication'" />
           <option name="timeStamp" value="41" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/JobManagementService/Controllers/JobOfferController.cs</url>
           <line>19</line>
-          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\JobOfferController.cs" initialLine="19" containingFunctionPresentation="Method 'GetJobById'">
-            <startOffsets>
-              <option value="526" />
-            </startOffsets>
-            <endOffsets>
-              <option value="571" />
-            </endOffsets>
-          </properties>
+          <properties documentPath="U:\FourthYear\Sem1\PAD\Labs\Lab1\RecruitmentManagement\JobManagementService\Controllers\JobOfferController.cs" initialLine="19" containingFunctionPresentation="Method 'GetJobById'" />
           <option name="timeStamp" value="42" />
         </line-breakpoint>
       </breakpoints>
