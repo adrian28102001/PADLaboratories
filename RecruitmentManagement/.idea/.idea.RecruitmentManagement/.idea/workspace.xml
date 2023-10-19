@@ -11,7 +11,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="" />
+    <list default="true" id="7edc1b34-929e-406f-8fc6-2a900dcfca68" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/ApplicationManagementService/appsettings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/JobManagementService/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/JobManagementService/appsettings.json" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -329,6 +332,7 @@
       <workItem from="1697566823996" duration="4340000" />
       <workItem from="1697624701701" duration="4908000" />
       <workItem from="1697646264877" duration="2257000" />
+      <workItem from="1697724268096" duration="453000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit. Created solution and projects">
       <option name="closed" value="true" />
