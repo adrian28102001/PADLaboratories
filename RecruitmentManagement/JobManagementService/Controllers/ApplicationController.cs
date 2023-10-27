@@ -8,9 +8,11 @@ namespace JobManagementService.Controllers;
 public class ApplicationController : ControllerBase
 {
     private readonly HttpClient _apiGatewayClient;
+    private readonly ILogger<ApplicationController> _logger;
 
-    public ApplicationController(IHttpClientFactory clientFactory)
+    public ApplicationController(IHttpClientFactory clientFactory, ILogger<ApplicationController> logger)
     {
+        _logger = logger;
         _apiGatewayClient = clientFactory.CreateClient("APIGateway");
     }
 
@@ -19,6 +21,7 @@ public class ApplicationController : ControllerBase
     {
         try
         {
+            _logger.LogInformation("GET /GetJobApplications endpoint hit");
             var response = await _apiGatewayClient.GetAsync($"applicationmanagement/api/applications/job/{jobId}");
 
             if (response.IsSuccessStatusCode)

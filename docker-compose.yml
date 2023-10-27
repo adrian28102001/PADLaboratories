@@ -19,6 +19,8 @@ services:
       - lab-network
     depends_on:
       - redis
+    environment:
+      - NODE_ENV=docker
 
   api-gateway:
     build:
@@ -31,6 +33,8 @@ services:
     depends_on:
       - service-discovery
       - redis
+    environment:
+      - NODE_ENV=docker
 
   applicationmanagementservice:
     build:
@@ -43,6 +47,8 @@ services:
     depends_on:
       - api-gateway
       - applicationmanagementdb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Deploy
 
   jobmanagementservice:
     build:
@@ -55,6 +61,8 @@ services:
     depends_on:
       - api-gateway
       - jobmanagementdb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Deploy
 
   applicationmanagementdb:
     image: postgres:latest

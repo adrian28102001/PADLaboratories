@@ -1,18 +1,17 @@
 const express = require('express');
 const redis = require('redis');
 const app = express();
-const PORT = 4000;
 const { promisify } = require('util');
-const redisClient = redis.createClient({
-    host: 'redis',
-    port: 6379,
-    retry_strategy: function (options) {
-        if (options.attempt > 10) {
-            return undefined;
-        }
-        return 1000;
-    }
-});
+
+const environment = process.env.NODE_ENV || 'development';
+const config = require('./config')[environment];
+
+if (!config) {
+    console.error(`No configuration found for environment: ${environment}`);
+    process.exit(1);
+}
+
+const redisClient = redis.createClient(config.REDIS_CONFIG);
 
 redisClient.on('error', (err) => {
     console.error("Error connecting to redis", err);
@@ -26,13 +25,10 @@ redisClient.on('ready', () => {
     console.log('Redis client is ready for commands');
 });
 
-let services = {};
-
 app.use(express.json());
 
 app.get('/services', async (req, res) => {
     try {
-        // Fetch all the service names (keys) from Redis
         const keysAsync = promisify(redisClient.keys).bind(redisClient);
         const serviceNames = await keysAsync('*');
 
@@ -40,7 +36,6 @@ app.get('/services', async (req, res) => {
             return res.status(200).send([]);
         }
 
-        // Fetch all services details from Redis
         const multi = redisClient.multi();
         for (let name of serviceNames) {
             multi.hgetall(name);
@@ -49,13 +44,12 @@ app.get('/services', async (req, res) => {
         const execAsync = promisify(multi.exec).bind(multi);
         const servicesDetails = await execAsync();
 
-        // Format the services for the response
         const formattedServices = serviceNames.map((name, index) => ({
             name: name,
-            ...servicesDetails[index]
+            ...servicesDetails[index],
+            urls: JSON.parse(servicesDetails[index].urls)
         }));
 
-        // Return the formatted services
         res.status(200).send(formattedServices);
     } catch (err) {
         console.error("Error fetching services from Redis:", err);
@@ -63,57 +57,50 @@ app.get('/services', async (req, res) => {
     }
 });
 
-
 app.post('/register', (req, res) => {
-    let {name, url, load} = req.body;
-    if (!name || !url || load == null) return res.status(400).send("Invalid registration details.");
+    let { name, urls, load } = req.body;
+    if (!name || !urls || !Array.isArray(urls) || urls.length === 0 || load == null) {
+        return res.status(400).send("Invalid registration details.");
+    }
 
-    services[name] = {name, url, load }; // Store the service in the services object
-
-    // Register the service in Redis with load information
-    redisClient.hmset(name, 'url', url, 'load', load, (err) => {
+    const urlsJson = JSON.stringify(urls);
+    redisClient.hmset(name, 'urls', urlsJson, 'load', load, 'currentIndex', 0, (err) => {
         if (err) {
             console.error("Error setting value in Redis:", err);
             return res.status(500).send("Internal server error.");
         }
-        redisClient.expire(name, 300); // Set expiry time for the service in Redis
-        console.log(`Service ${name} was registered having an address ${url} with load ${load}`);
+        redisClient.expire(name, config.REDIS_EXPIRY); // Use expiry time from config
+        console.log(`Service ${name} was registered with URLs ${urls} and load ${load}`);
         res.send("Service registered successfully");
     });
 });
 
-app.get('/discover/:name', (req, res) => {
-    let name = req.params.name.toLowerCase();
-
+app.get('/discover/:name', async (req, res) => {
+    const name = req.params.name.toLowerCase();
     const hgetallAsync = promisify(redisClient.hgetall).bind(redisClient);
 
-    hgetallAsync(name).then(service => {
-        if (service) {
-            res.send(service.url);
+    try {
+        const service = await hgetallAsync(name);
+        if (service && service.urls) {
+            const urls = JSON.parse(service.urls);
+            const currentIndex = parseInt(service.currentIndex, 10);
+            const nextIndex = (currentIndex + 1) % urls.length;
+            redisClient.hset(name, 'currentIndex', nextIndex);
+            res.send(urls[currentIndex]);
         } else {
-            service = services[name];
-            if (!service) return res.status(404).send("Service not found.");
-
-            // Cache the service in Redis
-            redisClient.hmset(name, 'url', service.url, 'load', service.load, (err) => {
-                if (err) {
-                    console.error("Error caching value in Redis:", err);
-                    return res.status(500).send("Internal server error.");
-                }
-                redisClient.expire(name, 300);
-                res.send(service.url);
-            });
+            return res.status(404).send("Service not found.");
         }
-    }).catch(err => {
+    } catch (err) {
         console.error("Error getting value from Redis:", err);
         return res.status(500).send("Internal server error.");
-    });
+    }
 });
 
 app.get('/health', (req, res) => {
     res.status(200).send('Service Discovery is healthy');
 });
 
+const PORT = config.PORT || 4000;
 app.listen(PORT, () => {
-    console.log(`Service Discovery is running on port ${PORT}`);
+    console.log(`Service Discovery is running on port ${PORT} and environment: ${environment}`);
 });

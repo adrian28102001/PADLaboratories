@@ -5,7 +5,7 @@ class CircuitBreaker {
         this.timeoutLimit = timeoutLimit;
         this.failureThreshold = failureThreshold;
         this.resetTimer = null;
-        this.fallbackFunction = fallbackFunction; // A function to call when the circuit is OPEN
+        this.fallbackFunction = fallbackFunction;
     }
 
     logState() {

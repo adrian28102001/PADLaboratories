@@ -1,7 +1,7 @@
 const axios = require('axios');
-const {SERVICE_DISCOVERY_URL} = require('./config');
+const {SERVICE_DISCOVERY_URL} = require('./configs/config');
 const CircuitBreaker = require('./circuitBreaker');
-const config = require("./config");
+const config = require("./configs/config");
 
 const circuitBreaker = new CircuitBreaker(
     config.TIMEOUT_LIMIT,

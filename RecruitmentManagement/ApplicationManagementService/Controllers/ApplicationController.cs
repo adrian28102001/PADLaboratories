@@ -17,25 +17,32 @@ public class ApplicationController : ControllerBase
     private readonly IEmailService _emailService;
     private readonly IFileStorageService _fileStorageService;
     private readonly EmailSettings _emailSettings;
+    private readonly ILogger<ApplicationController> _logger;
 
     public ApplicationController(IRepository<Application> repository, IEmailService emailService,
-        IFileStorageService fileStorageService, IOptions<EmailSettings> emailSettings)
+        IFileStorageService fileStorageService, IOptions<EmailSettings> emailSettings,
+        ILogger<ApplicationController> logger)
     {
         _repository = repository;
         _emailService = emailService;
         _fileStorageService = fileStorageService;
+        _logger = logger;
         _emailSettings = emailSettings.Value;
     }
 
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
     {
+        _logger.LogInformation("GET /applications endpoint hit");
+
         return Ok(await _repository.GetAllAsync());
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<Application>> GetApplication(int id)
     {
+        _logger.LogInformation("GET /applications/id endpoint hit");
+
         var application = await _repository.GetByIdAsync(id);
         if (application == null)
         {
@@ -48,6 +55,8 @@ public class ApplicationController : ControllerBase
     [HttpGet("job/{jobId}")]
     public async Task<ActionResult<Application>> GetApplicationByJobId(int jobId)
     {
+        _logger.LogInformation("GET /job/id endpoint hit");
+
         var table = _repository.GetAllQuery();
         var application = await table.FirstOrDefaultAsync(it => it.JobOfferId == jobId);
 
@@ -62,6 +71,8 @@ public class ApplicationController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<Application>> PostApplication([FromForm] ApplicationModel application)
     {
+        _logger.LogInformation("POST /postapplication endpoint hit");
+
         if (application.CVFile != null && application.CVFile.Length > 0)
         {
             var filePath = await _fileStorageService.SaveFileAsync(application.CVFile);
@@ -70,21 +81,7 @@ public class ApplicationController : ControllerBase
 
         await _repository.AddAsync(application.ToModel());
 
-        if (application.CVFile != null && application.CVFile.Length > 0)
-        {
-            Task.Run(() => _emailService.SendEmailWithAttachmentAsync(
-                _emailSettings.Recipient,
-                $"New application received from CandidateId: {application.CandidateId} for JobOfferId: {application.JobOfferId}",
-                application.CVPath
-            )).ContinueWith(task =>
-            {
-                if (task.IsFaulted)
-                {
-                    Console.WriteLine($"Failed to send email. Exception: {task.Exception?.InnerException?.Message}");
-                }
-            });
-        }
-
+        // SendEmail(application);
 
         return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
     }
@@ -93,6 +90,8 @@ public class ApplicationController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> PutApplication(int id, Application application)
     {
+        _logger.LogInformation("PUT /putapplication endpoint hit");
+
         if (id != application.Id)
         {
             return BadRequest();
@@ -118,6 +117,8 @@ public class ApplicationController : ControllerBase
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteApplication(int id)
     {
+        _logger.LogInformation("DELETE /deleteapplication endpoint hit");
+
         var application = await _repository.GetByIdAsync(id);
         if (application == null)
         {
@@ -126,5 +127,23 @@ public class ApplicationController : ControllerBase
 
         await _repository.DeleteAsync(application);
         return NoContent();
+    }
+
+    private void SendEmail(ApplicationModel application)
+    {
+        if (application.CVFile != null && application.CVFile.Length > 0)
+        {
+            Task.Run(() => _emailService.SendEmailWithAttachmentAsync(
+                _emailSettings.Recipient,
+                $"New application received from CandidateId: {application.CandidateId} for JobOfferId: {application.JobOfferId}",
+                application.CVPath
+            )).ContinueWith(task =>
+            {
+                if (task.IsFaulted)
+                {
+                    Console.WriteLine($"Failed to send email. Exception: {task.Exception?.InnerException?.Message}");
+                }
+            });
+        }
     }
 }

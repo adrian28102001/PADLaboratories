@@ -4,15 +4,23 @@ const {setupCache} = require('axios-cache-adapter');
 const redis = require('redis');
 const multer = require('multer');
 const FormData = require('form-data');
-const config = require('./config');
+const environment = process.env.NODE_ENV || 'development';
+const config = require('./config')[environment];
+
+if (!config) {
+    console.error(`No configuration found for environment: ${environment}`);
+    process.exit(1);
+}
+
+console.log(`Running in ${environment} environment`);
+
 const monitorLoad = require('./loadMonitor');
 const discoverService = require('./serviceDiscovery');
-const {SERVICE_DISCOVERY_URL} = require("./config");
 
 const app = express();
 const upload = multer();
 
-const retryDuration = 5000; // 5 seconds, adjust as needed
+const retryDuration = 5000;
 
 app.use(upload.any());
 app.use(monitorLoad);
@@ -22,13 +30,13 @@ let serviceDiscoveryIsUp = false;
 
 const checkServiceDiscovery = async () => {
     try {
-        const response = await axios.get(`${SERVICE_DISCOVERY_URL}/health`);
-        console.log("Trying to access:" + `${SERVICE_DISCOVERY_URL}/health`);
+        const response = await axios.get(`${config.SERVICE_DISCOVERY_URL}/health`);
+        console.log("Trying to access:" + `${config.SERVICE_DISCOVERY_URL}/health`);
 
         if (response.status === 200) {
             console.log("Successfully connected to Service Discovery!");
             serviceDiscoveryIsUp = true;
-            clearInterval(checkServiceDiscoveryInterval); // Clear the interval once connected
+            clearInterval(checkServiceDiscoveryInterval);
         }
     } catch (error) {
         console.log("Failed connecting to Service Discovery. Retrying...");
@@ -39,7 +47,6 @@ const connectToRedis = () => {
     const redisClient = redis.createClient(config.REDIS_CONFIG);
     redisClient.on('error', (err) => {
         console.error('Failed to connect to Redis:', err);
-        // Retry after `retryDuration`
         setTimeout(connectToRedis, retryDuration);
     });
     redisClient.on('connect', () => {
@@ -86,7 +93,6 @@ app.use('/', async (req, res) => {
             config.data = req.body;
         }
 
-        // Set the adapter based on the request method
         if (req.method.toLowerCase() !== 'get') {
             config.adapter = undefined;
         } else {
@@ -98,15 +104,11 @@ app.use('/', async (req, res) => {
         res.status(status).send(data);
     } catch (error) {
         if (error.response) {
-            // The request was made and the server responded with a status code
-            // that falls out of the range of 2xx
             console.error('Server responded with error:', error.response.data);
             return res.status(error.response.status).send(error.response.data);
         } else if (error.request) {
-            // The request was made but no response was received
             console.error('No response received:', error.request);
         } else {
-            // Something happened in setting up the request that triggered an Error
             console.error('Error calling service:', error.message);
         }
         res.status(500).send(error.message);
@@ -114,6 +116,6 @@ app.use('/', async (req, res) => {
 });
 
 app.listen(config.PORT, () => {
-    console.log(`API Gateway is running on port ${config.PORT}`);
+    console.log(`API Gateway is running on port ${config.PORT} in ${environment} environment`);
 });
 
