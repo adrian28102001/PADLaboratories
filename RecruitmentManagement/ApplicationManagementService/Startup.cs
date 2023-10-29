@@ -40,6 +40,8 @@ public class Startup
     {
         if (app.Environment.IsDevelopment())
         {
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
 
         await app.DatabaseIsConnected();

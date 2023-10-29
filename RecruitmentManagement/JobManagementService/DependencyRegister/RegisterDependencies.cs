@@ -13,6 +13,8 @@ public static class RegisterDependencies
 {
     public static void Register(IServiceCollection services)
     {
+        services.AddSwaggerGen();
+
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IJobOfferService, JobOfferService>();
 

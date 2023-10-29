@@ -1,4 +1,4 @@
-const { CRITICAL_LOAD_THRESHOLD } = require('./configs/config');
+const {CRITICAL_LOAD_THRESHOLD} = require('./config');
 
 let requestCount = 0;
 let lastCheckedTimestamp = Date.now();

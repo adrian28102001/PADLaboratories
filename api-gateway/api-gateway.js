@@ -70,7 +70,7 @@ app.get('/health', (req, res) => {
 
 app.use('/', async (req, res) => {
     const serviceName = req.path.split('/')[1];
-    const serviceCamelCaseName = `${serviceName.charAt(0).toUpperCase()}${serviceName.slice(1)}`;
+    const serviceCamelCaseName = `${serviceName.charAt(0).toLowerCase()}${serviceName.slice(1)}`;
     const serviceURL = await discoverService(serviceCamelCaseName);
 
     if (!serviceURL) return res.status(500).send('Service not found');

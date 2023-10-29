@@ -10,9 +10,10 @@ namespace JobManagementService.Extensions;
 public static class ServiceProviderExtensions
 {
     public static async Task RegisterToServiceDiscovery(this IServiceProvider serviceProvider,
-        IConfiguration configurationManager)
+        IConfiguration configuration)
     {
-        var serviceConfig = configurationManager.GetSection("ServiceConfig").Get<ServiceConfiguration>();
+        var serviceConfig = new ServiceConfiguration(configuration);
+
         var httpClientFactory = serviceProvider.GetRequiredService<IHttpClientFactory>();
         var client = httpClientFactory.CreateClient();
         client.BaseAddress = new Uri(serviceConfig.DiscoveryUrl);

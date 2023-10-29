@@ -11,7 +11,7 @@ module.exports = {
                 return 1000;
             }
         },
-        REDIS_EXPIRY: 300,
+        REDIS_EXPIRY: 86400,
     },
     docker: {
         PORT: 4000,
@@ -25,6 +25,6 @@ module.exports = {
                 return 1000;
             }
         },
-        REDIS_EXPIRY: 300,
+        REDIS_EXPIRY: 86400,
     }
 };

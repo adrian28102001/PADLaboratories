@@ -1,7 +1,8 @@
 const axios = require('axios');
-const {SERVICE_DISCOVERY_URL} = require('./configs/config');
+const {SERVICE_DISCOVERY_URL} = require('./config');
 const CircuitBreaker = require('./circuitBreaker');
-const config = require("./configs/config");
+const environment = process.env.NODE_ENV || 'development';
+const config = require('./config')[environment];
 
 const circuitBreaker = new CircuitBreaker(
     config.TIMEOUT_LIMIT,
@@ -14,7 +15,7 @@ const circuitBreaker = new CircuitBreaker(
 
 const discoverService = async (serviceName) => {
     try {
-        const {data} = await circuitBreaker.call(() => axios.get(`${SERVICE_DISCOVERY_URL}/discover/${serviceName}`));
+        const {data} = await circuitBreaker.call(() => axios.get(`${config.SERVICE_DISCOVERY_URL}/discover/${serviceName}`));
 
         if (!data) throw new Error('Service not found');
         return data;

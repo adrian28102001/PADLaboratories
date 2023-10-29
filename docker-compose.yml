@@ -49,6 +49,20 @@ services:
       - applicationmanagementdb
     environment:
       - ASPNETCORE_ENVIRONMENT=Deploy
+  
+  applicationmanagementservice1:
+    build:
+      context: ./RecruitmentManagement/ApplicationManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5097:80"
+    networks:
+      - lab-network
+    depends_on:
+      - api-gateway
+      - applicationmanagementdb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Deploy
 
   jobmanagementservice:
     build:
@@ -64,6 +78,21 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Deploy
 
+  jobmanagementservice1:
+    build:
+      context: ./RecruitmentManagement/JobManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5063:80"
+    networks:
+      - lab-network
+    depends_on:
+      - api-gateway
+      - jobmanagementdb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Deploy
+  
+  
   applicationmanagementdb:
     image: postgres:latest
     environment:

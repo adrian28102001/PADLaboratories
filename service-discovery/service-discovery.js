@@ -58,20 +58,48 @@ app.get('/services', async (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    let { name, urls, load } = req.body;
-    if (!name || !urls || !Array.isArray(urls) || urls.length === 0 || load == null) {
+    let { name, url, load } = req.body;
+    if (!name || !url || load == null) {
         return res.status(400).send("Invalid registration details.");
     }
 
-    const urlsJson = JSON.stringify(urls);
-    redisClient.hmset(name, 'urls', urlsJson, 'load', load, 'currentIndex', 0, (err) => {
+    name = name.toLowerCase();
+
+    redisClient.hgetall(name, (err, service) => {
         if (err) {
-            console.error("Error setting value in Redis:", err);
+            console.error("Error getting service from Redis:", err);
             return res.status(500).send("Internal server error.");
         }
-        redisClient.expire(name, config.REDIS_EXPIRY); // Use expiry time from config
-        console.log(`Service ${name} was registered with URLs ${urls} and load ${load}`);
-        res.send("Service registered successfully");
+
+        let urls = [];
+        let currentIndex = 0;
+        if (service) {
+            urls = JSON.parse(service.urls);
+            currentIndex = parseInt(service.currentIndex, 10);
+        }
+
+        if (urls.includes(url)) {
+            console.log(`Service ${name} with URL ${url} is already registered.`);
+            return res.status(200).send("Service already registered.");
+        }
+
+        urls.push(url);
+
+        const updatedService = {
+            urls: JSON.stringify(urls),
+            load: load.toString(),
+            currentIndex: currentIndex.toString()
+        };
+
+        redisClient.hmset(name, updatedService, (err) => {
+            if (err) {
+                console.error("Error setting value in Redis:", err);
+                return res.status(500).send("Internal server error.");
+            }
+            redisClient.expire(name, config.REDIS_EXPIRY); // Use expiry time from config
+            console.log(`Service ${name} was registered with URL ${url} and load ${load}`);
+            res.send("Service registered successfully");
+        });
     });
 });
 
@@ -86,7 +114,7 @@ app.get('/discover/:name', async (req, res) => {
             const currentIndex = parseInt(service.currentIndex, 10);
             const nextIndex = (currentIndex + 1) % urls.length;
             redisClient.hset(name, 'currentIndex', nextIndex);
-            res.send(urls[currentIndex]);
+            res.send(urls[nextIndex]);
         } else {
             return res.status(404).send("Service not found.");
         }
@@ -95,6 +123,7 @@ app.get('/discover/:name', async (req, res) => {
         return res.status(500).send("Internal server error.");
     }
 });
+
 
 app.get('/health', (req, res) => {
     res.status(200).send('Service Discovery is healthy');

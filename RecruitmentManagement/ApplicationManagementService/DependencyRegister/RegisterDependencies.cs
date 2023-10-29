@@ -14,6 +14,8 @@ public static class RegisterDependencies
 {
     public static void Register(IServiceCollection services, IConfiguration configurationManager)
     {
+        services.AddSwaggerGen();
+
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
         services.AddHealthChecks();
