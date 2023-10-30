@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 4000
 
 # Start the app
-CMD ["node", "service-discovery.js"]
+CMD ["node", "index.js"]

@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the app
-CMD ["node", "api-gateway.js"]
+CMD ["node", "main.js"]
