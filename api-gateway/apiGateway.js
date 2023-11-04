@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const { setupCache } = require('axios-cache-adapter');
+const {setupCache} = require('axios-cache-adapter');
 const loadMonitor = require('./loadMonitor');
 const ServiceDiscoveryChecker = require('./serviceDiscoveryChecker');
 const RedisClient = require('./redisClient');
@@ -8,13 +8,15 @@ const ConfigManager = require('./configManager');
 const serviceDiscovery = require('./serviceDiscovery');
 const axios = require('axios');
 const FormData = require('form-data');
+const { promisify } = require('util');
 
 class ApiGateway {
     constructor() {
         this.configManager = new ConfigManager(process.env.NODE_ENV);
         this.config = this.configManager.getConfig();
-        this.redisClient = new RedisClient(this.config.REDIS_CONFIG, 5000).getClient();
-        this.cache = setupCache({ ...this.config.CACHE_CONFIG, redis: this.redisClient });
+        this.redisClient = new RedisClient(this.config.REDIS_CONFIG, 10000).getClient();
+        this.getAsync = promisify(this.redisClient.get).bind(this.redisClient);
+        this.cache = setupCache({...this.config.CACHE_CONFIG, redis: this.redisClient});
         this.serviceDiscoveryChecker = new ServiceDiscoveryChecker(this.config.SERVICE_DISCOVERY_URL, 10000);
         this.app = express();
         this.upload = multer();
@@ -26,6 +28,54 @@ class ApiGateway {
         this.app.use(this.upload.any());
         this.app.use(loadMonitor);
         this.app.use(express.json());
+    }
+
+    async getNextServiceUrl(serviceName) {
+        const serviceUrlsCacheKey = `service_urls_${serviceName}`;
+        let serviceUrls;
+        try {
+            const cacheResult = await this.getAsync(serviceUrlsCacheKey);
+            if (cacheResult) {
+                serviceUrls = JSON.parse(cacheResult);
+            } else {
+                console.log(`No URLs found in cache for ${serviceName}. Invoking service discovery.`);
+                serviceUrls = await serviceDiscovery(serviceName, this.redisClient); // Fetching new URLs from service discovery
+                if (!serviceUrls || serviceUrls.length === 0) {
+                    console.error(`Service discovery for ${serviceName} failed or returned empty list.`);
+                    return null;
+                }
+                await this.redisClient.set(serviceUrlsCacheKey, JSON.stringify(serviceUrls), 'EX', this.config.CACHE_TTL); // Caching the discovered URLs
+                console.log(`Service URLs for ${serviceName} cached:`, serviceUrls);
+            }
+        } catch (error) {
+            console.error(`Error retrieving or parsing URLs for ${serviceName} from Redis cache:`, error);
+            throw error; // Or handle it as per your error handling strategy
+        }
+
+        // Load balancing with round-robin strategy
+        const serviceCounterKey = `service_counter_${serviceName}`;
+        const currentCounter = await this.incrementCounter(serviceCounterKey); // Increment the counter for round-robin
+        console.log(`Current round-robin counter for ${serviceName}:`, currentCounter);
+
+        const serviceIndex = currentCounter % serviceUrls.length;
+        const nextServiceUrl = serviceUrls[serviceIndex];
+        console.log(`Redirecting to instance ${serviceIndex + 1} of ${serviceName}:`, nextServiceUrl);
+
+        return nextServiceUrl;
+    }
+
+
+    async incrementCounter(key) {
+        return new Promise((resolve, reject) => {
+            this.redisClient.incr(key, (err, reply) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    console.log(`Counter for ${key} incremented:`, reply);
+                    resolve(reply);
+                }
+            });
+        });
     }
 
     setupRoutes() {
@@ -40,15 +90,19 @@ class ApiGateway {
         this.app.use('/', async (req, res) => {
             const serviceName = req.path.split('/')[1];
             const serviceCamelCaseName = `${serviceName.charAt(0).toLowerCase()}${serviceName.slice(1)}`;
-            const serviceURL = await serviceDiscovery(serviceCamelCaseName);
+            const serviceURL = await this.getNextServiceUrl(serviceCamelCaseName, this.redisClient);
 
-            if (!serviceURL) return res.status(500).send('Service not found');
-
+            if (!serviceURL) {
+                console.error(`No service URL available for ${serviceCamelCaseName}.`);
+                return res.status(500).send('Service not found');
+            }
             try {
                 let config = {
                     method: req.method,
                     url: `${serviceURL}${req.path}`,
                 };
+
+                console.log(`Incoming request to ${req.method} ${req.path}`);
 
                 if (req.is('multipart/form-data')) {
                     const formData = new FormData();

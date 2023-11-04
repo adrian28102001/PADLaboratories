@@ -6,6 +6,7 @@ module.exports = {
         TIMEOUT_LIMIT: 5000,
         FAILURE_THRESHOLD: 3,
         FALLBACK_MESSAGE: 'Fallback: Service temporarily unavailable',
+        CACHE_TTL: 30 * 60, // Cache TTL in seconds, e.g., 30 minutes
         REDIS_CONFIG: {
             host: 'localhost',
             port: 6379,
@@ -15,7 +16,7 @@ module.exports = {
             readOnError: false,
             clearOnStale: true,
             maxAge: 15 * 60 * 1000,
-        }
+        },
     },
     docker: {
         PORT: 3000,
@@ -24,6 +25,7 @@ module.exports = {
         TIMEOUT_LIMIT: 5000,
         FAILURE_THRESHOLD: 3,
         FALLBACK_MESSAGE: 'Fallback: Service temporarily unavailable',
+        CACHE_TTL: 30 * 60, // Cache TTL in seconds, e.g., 30 minutes
         REDIS_CONFIG: {
             host: 'redis',
             port: 6379,

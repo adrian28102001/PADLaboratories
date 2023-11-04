@@ -1,5 +1,4 @@
 const express = require('express');
-const RedisClient = require('./redisClient');
 const ServiceRegistry = require('./serviceRegistry');
 const config = require('./appConfig')
 
@@ -7,8 +6,7 @@ class App {
     constructor() {
         this.app = express();
         this.config = config[process.env.NODE_ENV || 'development'];
-        this.redisClient = new RedisClient(this.config.REDIS_CONFIG).getClient();
-        this.serviceRegistry = new ServiceRegistry(this.redisClient);
+        this.serviceRegistry = new ServiceRegistry();
         this.setupMiddlewares();
         this.setupRoutes();
     }
@@ -22,6 +20,7 @@ class App {
         this.app.post('/register', this.handleRegisterService.bind(this));
         this.app.get('/discover/:name', this.handleDiscoverService.bind(this));
         this.app.get('/health', this.handleHealthCheck.bind(this));
+        this.app.get('/clear-cache', this.handleClearCache.bind(this));
     }
 
     async handleGetServices(req, res) {
@@ -36,13 +35,13 @@ class App {
 
     async handleRegisterService(req, res) {
         try {
-            const { name, url, load } = req.body;
+            const { name, url } = req.body;
 
-            if (!name || !url || load == null) {
+            if (!name || !url) {
                 return res.status(400).send("Invalid registration details.");
             }
 
-            const message = await this.serviceRegistry.registerService(name, url, load);
+            const message = await this.serviceRegistry.registerService(name, url);
             res.send(message);
         } catch (err) {
             console.error("Error registering service:", err);
@@ -68,6 +67,16 @@ class App {
 
     handleHealthCheck(req, res) {
         res.status(200).send('Service Discovery is healthy');
+    }
+
+    async handleClearCache(req, res) {
+        try {
+            await this.serviceRegistry.clearCache();
+            res.status(200).send('Cache cleared successfully');
+        } catch (err) {
+            console.error("Error clearing cache:", err);
+            res.status(500).send("Internal server error.");
+        }
     }
 
     start() {
