@@ -7,6 +7,7 @@ module.exports = {
         FAILURE_THRESHOLD: 3,
         FALLBACK_MESSAGE: 'Fallback: Service temporarily unavailable',
         CACHE_TTL: 30 * 60, // Cache TTL in seconds, e.g., 30 minutes
+        REROUTE_THRESHOLD: 5,
         REDIS_CONFIG: {
             host: 'localhost',
             port: 6379,
@@ -26,6 +27,7 @@ module.exports = {
         FAILURE_THRESHOLD: 3,
         FALLBACK_MESSAGE: 'Fallback: Service temporarily unavailable',
         CACHE_TTL: 30 * 60, // Cache TTL in seconds, e.g., 30 minutes
+        REROUTE_THRESHOLD: 5,
         REDIS_CONFIG: {
             host: 'redis',
             port: 6379,

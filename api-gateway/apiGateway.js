@@ -1,6 +1,6 @@
 const express = require('express');
 const multer = require('multer');
-const {setupCache} = require('axios-cache-adapter');
+const { setupCache } = require('axios-cache-adapter');
 const loadMonitor = require('./loadMonitor');
 const ServiceDiscoveryChecker = require('./serviceDiscoveryChecker');
 const RedisClient = require('./redisClient');
@@ -9,6 +9,7 @@ const serviceDiscovery = require('./serviceDiscovery');
 const axios = require('axios');
 const FormData = require('form-data');
 const { promisify } = require('util');
+const CircuitBreaker = require('opossum');
 
 class ApiGateway {
     constructor() {
@@ -16,12 +17,30 @@ class ApiGateway {
         this.config = this.configManager.getConfig();
         this.redisClient = new RedisClient(this.config.REDIS_CONFIG, 10000).getClient();
         this.getAsync = promisify(this.redisClient.get).bind(this.redisClient);
-        this.cache = setupCache({...this.config.CACHE_CONFIG, redis: this.redisClient});
+        this.cache = setupCache({ ...this.config.CACHE_CONFIG, redis: this.redisClient });
         this.serviceDiscoveryChecker = new ServiceDiscoveryChecker(this.config.SERVICE_DISCOVERY_URL, 10000);
+        this.circuitBreakers = {};
+        this.failedReroutes = {}; // Track failed reroutes per service
+        this.rerouteThreshold = this.config.REROUTE_THRESHOLD; // Example threshold
+        this.breakerOptions = {
+            timeout: 5000, // If our function takes longer than 5 seconds, trigger a failure
+            errorThresholdPercentage: 50, // When 50% of requests fail, trip the circuit
+            resetTimeout: 30000 // After 30 seconds, try again.
+        };
         this.app = express();
         this.upload = multer();
         this.setupMiddleware();
         this.setupRoutes();
+    }
+
+    getCircuitBreakerForService(serviceName) {
+        if (!this.circuitBreakers[serviceName]) {
+            this.circuitBreakers[serviceName] = new CircuitBreaker(serviceDiscovery, this.breakerOptions);
+            this.circuitBreakers[serviceName].fallback(() => `Service ${serviceName} is currently unavailable.`);
+            this.circuitBreakers[serviceName].on('open', () => console.log(`Circuit for ${serviceName} opened`));
+            this.circuitBreakers[serviceName].on('close', () => console.log(`Circuit for ${serviceName} closed`));
+        }
+        return this.circuitBreakers[serviceName];
     }
 
     setupMiddleware() {
@@ -39,22 +58,30 @@ class ApiGateway {
                 serviceUrls = JSON.parse(cacheResult);
             } else {
                 console.log(`No URLs found in cache for ${serviceName}. Invoking service discovery.`);
-                serviceUrls = await serviceDiscovery(serviceName, this.redisClient); // Fetching new URLs from service discovery
+                const breaker = this.getCircuitBreakerForService(serviceName);
+                serviceUrls = await breaker.fire(serviceName, this.redisClient);
                 if (!serviceUrls || serviceUrls.length === 0) {
-                    console.error(`Service discovery for ${serviceName} failed or returned empty list.`);
+                    console.error(`Service discovery for ${serviceName} failed or returned an empty list.`);
                     return null;
                 }
                 await this.redisClient.set(serviceUrlsCacheKey, JSON.stringify(serviceUrls), 'EX', this.config.CACHE_TTL); // Caching the discovered URLs
                 console.log(`Service URLs for ${serviceName} cached:`, serviceUrls);
             }
         } catch (error) {
+            this.incrementFailedReroutes(serviceName);
+            if (this.failedReroutes[serviceName] >= this.rerouteThreshold) {
+                const breaker = this.getCircuitBreakerForService(serviceName);
+                breaker.fallback(() => `Service ${serviceName} is currently unavailable.`);
+                breaker.open();
+                this.failedReroutes[serviceName] = 0; // Reset counter after tripping the circuit
+            }
+
             console.error(`Error retrieving or parsing URLs for ${serviceName} from Redis cache:`, error);
             throw error; // Or handle it as per your error handling strategy
         }
 
-        // Load balancing with round-robin strategy
         const serviceCounterKey = `service_counter_${serviceName}`;
-        const currentCounter = await this.incrementCounter(serviceCounterKey); // Increment the counter for round-robin
+        const currentCounter = await this.incrementCounter(serviceCounterKey);
         console.log(`Current round-robin counter for ${serviceName}:`, currentCounter);
 
         const serviceIndex = currentCounter % serviceUrls.length;
@@ -63,7 +90,6 @@ class ApiGateway {
 
         return nextServiceUrl;
     }
-
 
     async incrementCounter(key) {
         return new Promise((resolve, reject) => {
@@ -76,6 +102,17 @@ class ApiGateway {
                 }
             });
         });
+    }
+
+    incrementFailedReroutes(serviceName) {
+        if (!this.failedReroutes[serviceName]) {
+            this.failedReroutes[serviceName] = 0;
+        }
+        this.failedReroutes[serviceName] += 1;
+    }
+
+    resetFailedReroutes(serviceName) {
+        this.failedReroutes[serviceName] = 0;
     }
 
     setupRoutes() {
@@ -95,7 +132,7 @@ class ApiGateway {
         this.app.use('/', async (req, res) => {
             const serviceName = req.path.split('/')[1];
             const serviceCamelCaseName = `${serviceName.charAt(0).toLowerCase()}${serviceName.slice(1)}`;
-            const serviceURL = await this.getNextServiceUrl(serviceCamelCaseName, this.redisClient);
+            const serviceURL = await this.getNextServiceUrl(serviceCamelCaseName);
 
             if (!serviceURL) {
                 console.error(`No service URL available for ${serviceCamelCaseName}.`);
@@ -105,6 +142,7 @@ class ApiGateway {
                 let config = {
                     method: req.method,
                     url: `${serviceURL}${req.path}`,
+                    maxRedirects: 0
                 };
 
                 console.log(`Incoming request to ${req.method} ${req.path}`);
@@ -127,20 +165,45 @@ class ApiGateway {
                     config.adapter = this.cache.adapter;
                 }
 
-                const {data, status} = await axios(config);
+                const response = await axios(config);
                 console.log(`Forwarded request to service: ${serviceName} at URL: ${serviceURL}`);
-                res.status(status).send(data);
+
+                if ([302, 307].includes(response.status)) {
+                    this.incrementFailedReroutes(serviceCamelCaseName);
+                    if (this.failedReroutes[serviceCamelCaseName] >= this.rerouteThreshold) {
+                        const breaker = this.getCircuitBreakerForService(serviceCamelCaseName);
+                        breaker.open();
+                        this.failedReroutes[serviceCamelCaseName] = 0; // Reset counter after tripping the circuit
+                    }
+                    return res.status(response.status).send('Redirecting...');
+                }
+
+                return res.status(response.status).send(response.data);
             } catch (error) {
                 if (error.response) {
-                    console.error('Server responded with error:', error.response.data);
-                    return res.status(error.response.status).send(error.response.data);
+                    if ([302, 307].includes(error.response.status)) {
+                        this.incrementFailedReroutes(serviceCamelCaseName);
+                        if (this.failedReroutes[serviceCamelCaseName] >= this.rerouteThreshold) {
+                            const breaker = this.getCircuitBreakerForService(serviceCamelCaseName);
+                            breaker.open();
+                            this.failedReroutes[serviceCamelCaseName] = 0; // Reset counter after tripping the circuit
+                        }
+                    } else {
+                        console.error('Server responded with error:', error.response.data);
+                        return res.status(error.response.status).send(error.response.data);
+                    }
                 } else if (error.request) {
                     console.error('No response received:', error.request);
                 } else {
                     console.error('Error calling service:', error.message);
                 }
-                res.status(500).send(error.message);
+                return res.status(500).send(error.message);
             }
+        });
+
+        this.app.get('/reset-breakers', (req, res) => {
+            Object.values(this.circuitBreakers).forEach(breaker => breaker.close());
+            res.status(200).send("All circuit breakers have been reset");
         });
     }
 
