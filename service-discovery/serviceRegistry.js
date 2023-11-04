@@ -42,12 +42,6 @@ class ServiceRegistry {
         }
         return allServices;
     }
-
-    clearCache() {
-        // Clear in-memory storage
-        this.services = {};
-        console.log('In-memory cache cleared');
-    }
 }
 
 module.exports = ServiceRegistry;

@@ -87,6 +87,11 @@ class ApiGateway {
             }
         });
 
+        this.app.get('/clear-cache', async (req, res) => {
+            await this.redisClient.flushdb();
+            res.status(200).send("Redis cache cleared");
+        });
+
         this.app.use('/', async (req, res) => {
             const serviceName = req.path.split('/')[1];
             const serviceCamelCaseName = `${serviceName.charAt(0).toLowerCase()}${serviceName.slice(1)}`;
