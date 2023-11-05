@@ -1,4 +1,5 @@
 ﻿using JobManagementService.Entities;
+using JobManagementService.Metric;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -19,6 +20,8 @@ public class ApplicationController : ControllerBase
     [HttpGet("{jobId}")]
     public async Task<OkObjectResult> GetJobApplications(int jobId)
     {
+        MetricsRegistry.JobApplicationsGetCounter.Inc();
+
         try
         {
             _logger.LogInformation("GET /GetJobApplications endpoint hit");

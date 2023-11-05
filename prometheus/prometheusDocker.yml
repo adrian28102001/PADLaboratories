@@ -1,0 +1,20 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'service-discovery'
+    static_configs:
+      - targets: ['service-discovery:4000']
+
+  - job_name: 'api-gateway'
+    static_configs:
+      - targets: ['api-gateway:3001']
+
+  - job_name: 'applicationmanagementservice'
+    static_configs:
+      - targets: ['applicationmanagementservice:80']
+
+  - job_name: 'jobmanagementservice'
+    static_configs:
+      - targets: ['jobmanagementservice:80']

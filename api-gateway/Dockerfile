@@ -13,7 +13,7 @@ RUN npm install
 # Copy the rest of the code
 COPY . .
 
-EXPOSE 3000
+EXPOSE 3001
 
 # Start the app
 CMD ["node", "main.js"]

@@ -4,6 +4,7 @@ using ApplicationManagementService.Extensions;
 using ApplicationManagementService.Middleware;
 using Microsoft.EntityFrameworkCore;
 using Polly;
+using Prometheus;
 
 namespace ApplicationManagementService;
 
@@ -54,12 +55,16 @@ public class Startup
 
         app.UseMiddleware<ConcurrencyMiddleware>();
 
+        app.UseHttpMetrics(); // This tracks metrics for HTTP requests
+        app.UseMetricServer(); // This tracks metrics for HTTP requests
+
         app.UseEndpoints(endpoints =>
         {
             endpoints.MapHealthChecks("/health");
             endpoints.MapControllers();
+            endpoints.MapMetrics();
         });
-
+        
         await app.Services.RegisterToServiceDiscovery(Configuration);
 
         app.Services.ApplyMigrations();

@@ -6,6 +6,7 @@ using JobManagementService.Services.JobOffer;
 using Newtonsoft.Json;
 using Polly;
 using JobManagementService.Factories;
+using Prometheus;
 
 namespace JobManagementService.DependencyRegister;
 

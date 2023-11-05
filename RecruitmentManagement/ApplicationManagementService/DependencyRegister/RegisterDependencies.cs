@@ -7,6 +7,7 @@ using ApplicationManagementService.Repositories;
 using ApplicationManagementService.Services;
 using Newtonsoft.Json;
 using Polly;
+using Prometheus;
 
 namespace ApplicationManagementService.DependencyRegister;
 

@@ -1,21 +1,17 @@
 const axios = require('axios');
 const { promisify } = require('util');
-const CircuitBreaker = require('opossum');
-
+const CircuitBreaker = require('./circuitBreaker');
 const environment = process.env.NODE_ENV || 'development';
 const config = require('./config')[environment];
 
-// Setup circuit breaker options
-const options = {
-    timeout: config.TIMEOUT_LIMIT, // If our function takes longer than this, trigger a failure
-    errorThresholdPercentage: config.FAILURE_THRESHOLD, // % of errors to trip the breaker
-    resetTimeout: 30000 // After this time try again
-};
-
-const breaker = new CircuitBreaker(axios, options);
-
-breaker.fallback(() => config.FALLBACK_MESSAGE);
-breaker.on('open', () => console.warn('Circuit has been opened! Fallback route triggered.'));
+const circuitBreaker = new CircuitBreaker(
+    config.TIMEOUT_LIMIT,
+    config.FAILURE_THRESHOLD,
+    () => {
+        console.warn(config.FALLBACK_MESSAGE);
+        return config.FALLBACK_MESSAGE;
+    },
+);
 
 const discoverService = async (serviceName, redisClient) => {
     const getAsync = promisify(redisClient.get).bind(redisClient);
@@ -28,23 +24,23 @@ const discoverService = async (serviceName, redisClient) => {
             return JSON.parse(cachedUrls);
         }
 
-        const response = await breaker.fire({
-            method: 'get',
-            url: `${config.SERVICE_DISCOVERY_URL}/discover/${serviceName}`
-        });
-
-        const { data } = response;
+        // No URLs in cache, so use circuit breaker to call service discovery
+        const { data } = await circuitBreaker.call(() =>
+            axios.get(`${config.SERVICE_DISCOVERY_URL}/discover/${serviceName}`)
+        );
 
         if (!data || data.length === 0) {
             throw new Error('Service not found');
         }
 
+        // Cache the URLs in Redis for future requests
         await setAsync(serviceUrlsCacheKey, JSON.stringify(data), 'EX', config.CACHE_TTL);
-        return data;
+
+        return data; // data should be an array of URLs
     } catch (error) {
         console.error('Error in service discovery:', error.message);
-        return null;
-    }``
+        return null; // Return null to signify the failure in discovery
+    }
 };
 
 module.exports = discoverService;

@@ -1,6 +1,6 @@
 module.exports = {
     development: {
-        PORT: 3000,
+        PORT: 3001,
         SERVICE_DISCOVERY_URL: 'http://localhost:4000',
         CRITICAL_LOAD_THRESHOLD: 60,
         TIMEOUT_LIMIT: 5000,
@@ -20,7 +20,7 @@ module.exports = {
         },
     },
     docker: {
-        PORT: 3000,
+        PORT: 3001,
         SERVICE_DISCOVERY_URL: 'http://service-discovery:4000',
         CRITICAL_LOAD_THRESHOLD: 60,
         TIMEOUT_LIMIT: 5000,
