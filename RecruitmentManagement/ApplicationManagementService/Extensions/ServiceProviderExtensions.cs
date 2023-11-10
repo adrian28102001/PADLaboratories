@@ -33,10 +33,18 @@ public static class ServiceProviderExtensions
 
         await retryPolicy.ExecuteAsync(async () =>
         {
+            // Assuming the service listens on port 80 internally
+            var internalPort = 80; 
+            var serviceName = configuration.GetValue<string>("SERVICE_NAME"); // Get the service name from configuration
+
+            // Form the service URL using the service name and internal port
+            var serviceUrl = $"http://{serviceName}:{internalPort}";
+            Console.WriteLine($"Service url : {serviceUrl}");
+
             var payload = new
             {
                 name = serviceConfig.ServiceName,
-                url = serviceConfig.ServiceUrl,
+                url = serviceUrl,
                 load = GetCurrentServiceLoad()
             };
 

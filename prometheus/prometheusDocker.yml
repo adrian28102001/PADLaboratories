@@ -11,10 +11,10 @@ scrape_configs:
     static_configs:
       - targets: ['api-gateway:3001']
 
-  - job_name: 'applicationmanagementservice'
+  - job_name: 'applicationmanagementservice1'
     static_configs:
-      - targets: ['applicationmanagementservice:80']
+      - targets: ['applicationmanagementservice1:80']
 
-  - job_name: 'jobmanagementservice'
+  - job_name: 'jobmanagementservice1'
     static_configs:
-      - targets: ['jobmanagementservice:80']
+      - targets: ['jobmanagementservice1:80']

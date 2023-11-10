@@ -36,12 +36,12 @@ services:
     environment:
       - NODE_ENV=docker
 
-  applicationmanagementservice:
+  applicationmanagementservice1:
     build:
       context: ./RecruitmentManagement/ApplicationManagementService
       dockerfile: Dockerfile
     ports:
-      - "5096:80"
+      - "5096:80"  # External:Internal
     networks:
       - lab-network
     depends_on:
@@ -49,9 +49,24 @@ services:
       - applicationmanagementdb
     environment:
       - ASPNETCORE_ENVIRONMENT=Deploy
+      - SERVICE_NAME=applicationmanagementservice1
 
+  applicationmanagementservice2:
+    build:
+      context: ./RecruitmentManagement/ApplicationManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5097:80"
+    networks:
+      - lab-network
+    depends_on:
+      - api-gateway
+      - applicationmanagementdb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Deploy
+      - SERVICE_NAME=applicationmanagementservice2
 
-  jobmanagementservice:
+  jobmanagementservice1:
     build:
       context: ./RecruitmentManagement/JobManagementService
       dockerfile: Dockerfile
@@ -64,6 +79,22 @@ services:
       - jobmanagementdb
     environment:
       - ASPNETCORE_ENVIRONMENT=Deploy
+      - SERVICE_NAME=jobmanagementservice1
+
+  jobmanagementservice2:
+    build:
+      context: ./RecruitmentManagement/JobManagementService
+      dockerfile: Dockerfile
+    ports:
+      - "5063:80"
+    networks:
+      - lab-network
+    depends_on:
+      - api-gateway
+      - jobmanagementdb
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Deploy
+      - SERVICE_NAME=jobmanagementservice2
 
   
   applicationmanagementdb:
