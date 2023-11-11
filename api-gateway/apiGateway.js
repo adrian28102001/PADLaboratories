@@ -10,6 +10,7 @@ const axios = require('axios');
 const FormData = require('form-data');
 const { promisify } = require('util');
 const client = require('prom-client');
+const CircuitBreaker = require('./circuitBreaker');
 
 class ApiGateway {
     constructor() {
@@ -107,6 +108,8 @@ class ApiGateway {
     }
 
     setupRoutes() {
+        const circuitBreaker = new CircuitBreaker(30000); // Instantiate with a 30-second timeout
+
         this.app.get('/health', (req, res) => {
             if (this.serviceDiscoveryChecker.getStatus()) {
                 res.status(200).send('API Gateway is healthy');
@@ -155,12 +158,26 @@ class ApiGateway {
                     config.adapter = this.cache.adapter;
                 }
 
-                const {data, status} = await axios(config);
+                // Call the service using the CircuitBreaker
+                const response = await circuitBreaker.call(() => axios(config));
+
                 console.log(`Forwarded request to service: ${serviceName} at URL: ${serviceURL}`);
-                res.status(status).send(data);
+                res.status(response.status).send(response.data);
             } catch (error) {
+                let isReroute = false;
+                // Check if the error code indicates a reroute situation
+                if (error.response && error.response.status >= 500) {
+                    isReroute = true;
+                }
+
                 if (error.response) {
                     console.error('Server responded with error:', error.response.data);
+                    // Only send reroute status if it's the first time to avoid loops
+                    if (isReroute && !req.headers['x-rerouted']) {
+                        // Attempt a reroute by recursively calling the same endpoint
+                        req.headers['x-rerouted'] = true; // Mark the request as rerouted
+                        return this.app.handle(req, res);
+                    }
                     return res.status(error.response.status).send(error.response.data);
                 } else if (error.request) {
                     console.error('No response received:', error.request);
