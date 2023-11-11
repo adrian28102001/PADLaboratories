@@ -35,7 +35,7 @@ public class ApplicationController : ControllerBase
     public async Task<ActionResult<IEnumerable<Application>>> GetApplications()
     {
         MetricsRegistry.ApplicationsGetCounter.Inc();
-        _logger.LogInformation("GET /applications endpoint hit");
+        Console.WriteLine("GET /applications endpoint hit");
 
         return Ok(await _repository.GetAllAsync());
     }
@@ -44,7 +44,7 @@ public class ApplicationController : ControllerBase
     public async Task<ActionResult<Application>> GetApplication(int id)
     {
         MetricsRegistry.ApplicationGetByIdCounter.Inc();
-        _logger.LogInformation("GET /applications/id endpoint hit");
+        Console.WriteLine("GET /applications/id endpoint hit");
 
         var application = await _repository.GetByIdAsync(id);
         if (application == null)
@@ -59,7 +59,7 @@ public class ApplicationController : ControllerBase
     public async Task<ActionResult<Application>> GetApplicationByJobId(int jobId)
     {
         MetricsRegistry.ApplicationGetByJobIdCounter.Inc();
-        _logger.LogInformation("GET /job/id endpoint hit");
+        Console.WriteLine("GET /job/id endpoint hit");
 
         var table = _repository.GetAllQuery();
         var application = await table.FirstOrDefaultAsync(it => it.JobOfferId == jobId);
@@ -76,7 +76,7 @@ public class ApplicationController : ControllerBase
     public async Task<ActionResult<Application>> PostApplication([FromForm] ApplicationModel application)
     {
         MetricsRegistry.ApplicationPostCounter.Inc();
-        _logger.LogInformation("POST /postapplication endpoint hit");
+        Console.WriteLine("POST /postapplication endpoint hit");
 
         if (application.CVFile != null && application.CVFile.Length > 0)
         {
@@ -96,7 +96,7 @@ public class ApplicationController : ControllerBase
     public async Task<IActionResult> PutApplication(int id, Application application)
     {
         MetricsRegistry.ApplicationPutCounter.Inc();
-        _logger.LogInformation("PUT /putapplication endpoint hit");
+        Console.WriteLine("PUT /putapplication endpoint hit");
 
         if (id != application.Id)
         {
@@ -124,7 +124,7 @@ public class ApplicationController : ControllerBase
     public async Task<IActionResult> DeleteApplication(int id)
     {
         MetricsRegistry.ApplicationDeleteCounter.Inc();
-        _logger.LogInformation("DELETE /deleteapplication endpoint hit");
+        Console.WriteLine("DELETE /deleteapplication endpoint hit");
 
         var application = await _repository.GetByIdAsync(id);
         if (application == null)

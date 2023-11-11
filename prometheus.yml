@@ -3,6 +3,7 @@ global:
   evaluation_interval: 15s
 
 scrape_configs:
+
   - job_name: 'service-discovery'
     static_configs:
       - targets: ['service-discovery:4000']
@@ -15,6 +16,14 @@ scrape_configs:
     static_configs:
       - targets: ['applicationmanagementservice1:80']
 
+  - job_name: 'applicationmanagementservice2'
+    static_configs:
+      - targets: ['applicationmanagementservice2:80']
+
   - job_name: 'jobmanagementservice1'
     static_configs:
       - targets: ['jobmanagementservice1:80']
+
+  - job_name: 'jobmanagementservice2'
+    static_configs:
+      - targets: ['jobmanagementservice2:80']

@@ -24,7 +24,7 @@ public class ApplicationController : ControllerBase
 
         try
         {
-            _logger.LogInformation("GET /GetJobApplications endpoint hit");
+            Console.WriteLine("GET /GetJobApplications endpoint hit");
             var response = await _apiGatewayClient.GetAsync($"applicationmanagement/api/applications/job/{jobId}");
 
             if (response.IsSuccessStatusCode)

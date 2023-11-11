@@ -19,7 +19,7 @@ public class JobOfferController : Controller
     [HttpGet("{id}")]
     public async Task<ActionResult<JobOffer>> GetJobById(int id)
     {
-        _logger.LogInformation("GET /GetJobApplications endpoint hit");
+        Console.WriteLine("GET /GetJobApplications endpoint hit");
 
         var job = await _jobOfferService.GetById(id);
         if (job == null)
