@@ -1,28 +1,23 @@
 const express = require('express');
 const multer = require('multer');
-const {setupCache} = require('axios-cache-adapter');
 const loadMonitor = require('./loadMonitor');
 const ServiceDiscoveryChecker = require('./serviceDiscoveryChecker');
-const RedisClient = require('./redisClient');
+const HazelcastClient = require('hazelcast-client').Client; // Import Hazelcast client
 const ConfigManager = require('./configManager');
 const serviceDiscovery = require('./serviceDiscovery');
 const axios = require('axios');
 const FormData = require('form-data');
-const { promisify } = require('util');
 const client = require('prom-client');
 const CircuitBreaker = require('./circuitBreaker');
+
 
 class ApiGateway {
     constructor() {
         this.configManager = new ConfigManager(process.env.NODE_ENV);
         this.config = this.configManager.getConfig();
-        this.redisClient = new RedisClient(this.config.REDIS_CONFIG, 10000).getClient();
-        this.getAsync = promisify(this.redisClient.get).bind(this.redisClient);
-        this.cache = setupCache({ ...this.config.CACHE_CONFIG, redis: this.redisClient });
+        this.initHazelcast();
         this.serviceDiscoveryChecker = new ServiceDiscoveryChecker(this.config.SERVICE_DISCOVERY_URL, 10000);
-        // Create a Prometheus Registry to register your custom metrics
         this.prometheusRegister = new client.Registry();
-        // Register Prometheus default metrics
         client.collectDefaultMetrics({ register: this.prometheusRegister });
         this.app = express();
         this.upload = multer();
@@ -35,6 +30,19 @@ class ApiGateway {
         this.app.use(this.upload.any());
         this.app.use(loadMonitor);
         this.app.use(express.json());
+    }
+
+    async initHazelcast() {
+        this.hazelcastClient = await HazelcastClient.newHazelcastClient({
+            clusterName: 'dev',
+            network: {
+                clusterMembers: [
+                    'hazelcast:5701'
+                ]
+            }
+        });
+        this.serviceUrlsMap = await this.hazelcastClient.getMap('serviceUrls');
+        this.serviceCountersMap = await this.hazelcastClient.getCPSubsystem().getAtomicLong('serviceCounters');
     }
 
     setupPrometheusMetrics() {
@@ -63,17 +71,17 @@ class ApiGateway {
         const serviceUrlsCacheKey = `service_urls_${serviceName}`;
         let serviceUrls;
         try {
-            const cacheResult = await this.getAsync(serviceUrlsCacheKey);
+            const cacheResult = await this.serviceUrlsMap.get(serviceUrlsCacheKey);
             if (cacheResult) {
                 serviceUrls = JSON.parse(cacheResult);
             } else {
                 console.log(`No URLs found in cache for ${serviceName}. Invoking service discovery.`);
-                serviceUrls = await serviceDiscovery(serviceName, this.redisClient); // Fetching new URLs from service discovery
+                serviceUrls = await serviceDiscovery(serviceName, this.hazelcastClient); // Fetching new URLs from service discovery
                 if (!serviceUrls || serviceUrls.length === 0) {
                     console.error(`Service discovery for ${serviceName} failed or returned empty list.`);
                     return null;
                 }
-                await this.redisClient.set(serviceUrlsCacheKey, JSON.stringify(serviceUrls), 'EX', this.config.CACHE_TTL); // Caching the discovered URLs
+                await this.serviceUrlsMap.set(serviceUrlsCacheKey, JSON.stringify(serviceUrls));
                 console.log(`Service URLs for ${serviceName} cached:`, serviceUrls);
             }
         } catch (error) {
@@ -93,18 +101,9 @@ class ApiGateway {
         return nextServiceUrl;
     }
 
-
     async incrementCounter(key) {
-        return new Promise((resolve, reject) => {
-            this.redisClient.incr(key, (err, reply) => {
-                if (err) {
-                    reject(err);
-                } else {
-                    console.log(`Counter for ${key} incremented:`, reply);
-                    resolve(reply);
-                }
-            });
-        });
+        const counter = await this.hazelcastClient.getCPSubsystem().getAtomicLong(key);
+        return await counter.incrementAndGet();
     }
 
     setupRoutes() {
@@ -119,26 +118,38 @@ class ApiGateway {
         });
 
         this.app.get('/clear-cache', async (req, res) => {
-            await this.redisClient.flushdb();
-            res.status(200).send("Redis cache cleared");
+            await this.serviceUrlsMap.clear();
+            res.status(200).send("Hazelcast cache cleared");
         });
+
 
         this.app.use('/', async (req, res) => {
             const serviceName = req.path.split('/')[1];
             const serviceCamelCaseName = `${serviceName.charAt(0).toLowerCase()}${serviceName.slice(1)}`;
-            const serviceURL = await this.getNextServiceUrl(serviceCamelCaseName, this.redisClient);
+            const serviceURL = await this.getNextServiceUrl(serviceCamelCaseName);
 
             if (!serviceURL) {
                 console.error(`No service URL available for ${serviceCamelCaseName}.`);
                 return res.status(500).send('Service not found');
             }
+
+            const cacheKey = req.method + ":" + req.path;
             try {
+                if (req.method.toLowerCase() === 'get') {
+                    // Check cache for existing response
+                    const cachedResponse = await this.serviceUrlsMap.get(cacheKey);
+                    if (cachedResponse) {
+                        console.log("Returning cached response");
+                        return res.status(200).send(cachedResponse);
+                    }
+                }
+
+                // Prepare request configuration
                 let config = {
                     method: req.method,
                     url: `${serviceURL}${req.path}`,
+                    data: req.is('multipart/form-data') ? undefined : req.body
                 };
-
-                console.log(`Incoming request to ${req.method} ${req.path}`);
 
                 if (req.is('multipart/form-data')) {
                     const formData = new FormData();
@@ -148,18 +159,15 @@ class ApiGateway {
                     }));
                     Object.keys(req.body).forEach(key => formData.append(key, req.body[key]));
                     config.data = formData;
-                } else {
-                    config.data = req.body;
                 }
 
-                if (req.method.toLowerCase() !== 'get') {
-                    config.adapter = undefined;
-                } else {
-                    config.adapter = this.cache.adapter;
-                }
-
-                // Call the service using the CircuitBreaker
+                // Call the service using the Circuit Breaker
                 const response = await circuitBreaker.call(() => axios(config));
+
+                // Cache the response if it's a GET request
+                if (req.method.toLowerCase() === 'get') {
+                    await this.serviceUrlsMap.set(cacheKey, response.data);
+                }
 
                 console.log(`Forwarded request to service: ${serviceName} at URL: ${serviceURL}`);
                 res.status(response.status).send(response.data);

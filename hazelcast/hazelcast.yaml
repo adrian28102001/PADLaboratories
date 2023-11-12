@@ -1,0 +1,11 @@
+hazelcast:
+  network:
+    join:
+      multicast:
+        enabled: false
+      tcp-ip:
+        enabled: true
+        member-list:
+          - hazelcast:5701
+          - hazelcast:5702
+          - hazelcast:5703

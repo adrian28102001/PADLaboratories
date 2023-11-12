@@ -13,13 +13,12 @@ const circuitBreaker = new CircuitBreaker(
     },
 );
 
-const discoverService = async (serviceName, redisClient) => {
-    const getAsync = promisify(redisClient.get).bind(redisClient);
-    const setAsync = promisify(redisClient.set).bind(redisClient);
-
+const discoverService = async (serviceName, hazelcastClient) => {
+    const serviceUrlsMap = await hazelcastClient.getMap('serviceUrls'); // Get distributed map for service URLs
     const serviceUrlsCacheKey = `service_urls_${serviceName}`;
+
     try {
-        const cachedUrls = await getAsync(serviceUrlsCacheKey);
+        const cachedUrls = await serviceUrlsMap.get(serviceUrlsCacheKey);
         if (cachedUrls) {
             return JSON.parse(cachedUrls);
         }
@@ -33,8 +32,8 @@ const discoverService = async (serviceName, redisClient) => {
             throw new Error('Service not found');
         }
 
-        // Cache the URLs in Redis for future requests
-        await setAsync(serviceUrlsCacheKey, JSON.stringify(data), 'EX', config.CACHE_TTL);
+        // Cache the URLs in Hazelcast for future requests
+        await serviceUrlsMap.set(serviceUrlsCacheKey, JSON.stringify(data));
 
         return data; // data should be an array of URLs
     } catch (error) {

@@ -1,11 +1,14 @@
 version: '3.8'
 
 services:
-  redis:
-    image: redis:latest
-    container_name: "redis"
+  hazelcast:
+    image: hazelcast/hazelcast:latest
     ports:
-      - "6379:6379"
+      - "5701" # Docker will map this to an available host port
+    environment:
+      - "JAVA_OPTS=-Dhazelcast.config=/opt/hazelcast/hazelcast.yaml"
+    volumes:
+      - ./hazelcast/hazelcast.yaml:/opt/hazelcast/hazelcast.yaml
     networks:
       - lab-network
 
@@ -17,8 +20,6 @@ services:
       - "4000:4000"
     networks:
       - lab-network
-    depends_on:
-      - redis
     environment:
       - NODE_ENV=docker
 
@@ -32,7 +33,7 @@ services:
       - lab-network
     depends_on:
       - service-discovery
-      - redis
+      - hazelcast
     environment:
       - NODE_ENV=docker
 

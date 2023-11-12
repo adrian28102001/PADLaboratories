@@ -196,41 +196,42 @@ Kibana is the catalog system to find and read the books.
 
 ### Steps to Implement Consistent Hashing:
 
-1. Hash Function:
-   You'll need a good hash function. This function will take the input (like a cache key) and return a position on our
-   imaginary ring.
-
-2. Distributing Nodes:
-   Using the same hash function, decide the position for each cache node on the ring.
-
-3. Storing and Retrieving:
-   To store an item, hash its key to get a position on the ring, then move clockwise to find the nearest node. This node
-   is where you'll store the item. For retrieval, do the same thing: hash, find the position, and get the item from the
-   nearest node.
-
-4. Handling Node Changes:
-   If a node is added or removed, only the items nearest to that node are affected. This minimizes the items that need
-   to be moved or rehashed.
+Hazelcast distributes data evenly across the cluster using partitions, and when a node in the cluster changes, it only
+migrates the data that belonged to that particular node to others, which minimizes the impact on the cache's
+availability and performance.
+Consistent hashing is a technique used to distribute data across a cluster to ensure that when the number of nodes
+changes, only a minimal amount of data needs to be moved. Imagine you have a circle with 360 degrees, and you can place
+your cache entries at different points on this circle. Each cache node is also assigned a range on this circle. When you
+add or remove a node, only the cache entries that fall within its range are affected. This means if a node disappears,
+only the cache entries within its range need to be moved to another node, rather than having to move everything. This
+helps keep the system balanced and minimizes the workload when nodes are added or removed, which is great for
+scalability and performance.
 
 ### Cache High Availability (HA):
 
-It ensures that a cache system remains operational even in the face of failures. This means if one cache server fails,
-there are backup servers that can provide the cached data without disruption.
+Hazelcast, you have implemented a form of Cache High Availability. Here's how Hazelcast achieves this:
 
-### Why is Cache HA important?
+Data Partitioning:
+Hazelcast automatically partitions data across the cluster. Each piece of data is stored in a partition, and partitions
+are distributed across the cluster nodes. This means that each node contains a subset of the total data, providing a
+balance of memory and processing power.
 
-Uptime: Your application doesn't crash or slow down significantly if a cache node fails.
-Data Integrity: Data in the cache remains consistent and reliable.
-How to Achieve Cache High Availability:
+Replication:
+For high availability, Hazelcast replicates these partitions across multiple nodes. This means if one node fails, the
+data is not lost; it can be retrieved from another node that holds the replica.
 
-1. Replication:
-   Have multiple copies of your cache. When one cache node fails, requests are automatically routed to a backup node.
+Automatic Failover:
+If a node in the cluster fails, Hazelcast automatically redistributes the partition responsibilities to the remaining
+nodes. The replicas are promoted to primary partitions to ensure that the cache service continues to operate without any
+data loss.
 
-2. Clustering:
-   Group multiple cache servers together. If one fails, another one in the cluster takes over.
+Elastic Scalability:
+Nodes can be added or removed from the cluster without downtime. Hazelcast rebalances the partitions across the new set
+of nodes automatically. This means your cache can scale with your application’s needs while maintaining availability.
 
-3. Automatic Failover:
-   If a cache node fails, the system automatically detects this and reroutes requests to a healthy node.
+Data Safety:
+Even during maintenance or scaling operations, Hazelcast ensures that at least one backup of the data persists, which
+protects against data loss.
 
 ### Long-running saga transactions
 
