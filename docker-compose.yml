@@ -124,36 +124,36 @@ services:
     networks:
       - lab-network
 
-  prometheus:
-    image: prom/prometheus:latest
-    volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
-    command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
-      - "--storage.tsdb.path=/prometheus"
-      - "--web.enable-lifecycle"
-    ports:
-      - "9090:9090"
-    networks:
-      - lab-network
-    depends_on:
-      - service-discovery
-      - api-gateway
-      - applicationmanagementservice1
-#      - applicationmanagementservice2
-      - jobmanagementservice1
-#      - jobmanagementservice2
-
-  grafana:
-    image: grafana/grafana:latest
-    depends_on:
-      - prometheus
-    ports:
-      - "3000:3000"
-    networks:
-      - lab-network
-    volumes:
-      - grafana-data:/var/lib/grafana
+#  prometheus:
+#    image: prom/prometheus:latest
+#    volumes:
+#      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+#    command:
+#      - "--config.file=/etc/prometheus/prometheus.yml"
+#      - "--storage.tsdb.path=/prometheus"
+#      - "--web.enable-lifecycle"
+#    ports:
+#      - "9090:9090"
+#    networks:
+#      - lab-network
+#    depends_on:
+#      - service-discovery
+#      - api-gateway
+#      - applicationmanagementservice1
+##      - applicationmanagementservice2
+#      - jobmanagementservice1
+##      - jobmanagementservice2
+#
+#  grafana:
+#    image: grafana/grafana:latest
+#    depends_on:
+#      - prometheus
+#    ports:
+#      - "3000:3000"
+#    networks:
+#      - lab-network
+#    volumes:
+#      - grafana-data:/var/lib/grafana
 
 
 networks:
@@ -163,4 +163,4 @@ networks:
 volumes:
   applicationmanagement-data:
   jobmanagement-data:
-  grafana-data:
+#  grafana-data:

@@ -114,11 +114,16 @@ public class ApplicationController : ControllerBase
     }
 
     [HttpDelete("{jobId}")]
-    public async Task<IActionResult> DeleteApplicationsByJobId(int jobId)
+    public async Task<IActionResult> DeleteApplicationsByJobId(int jobId, [FromQuery] bool shouldFail)
     {
         MetricsRegistry.ApplicationDeleteCounter.Inc();
-        Console.WriteLine("DELETE /deleteapplicationsbyjobid endpoint hit");
+        Console.WriteLine($"DELETE /deleteapplicationsbyjobid endpoint hit with {jobId} and {shouldFail}");
 
+        if (shouldFail)
+        {
+            return StatusCode(500, "This is a controller error for testing purposes");
+        }
+        
         try
         {
             var applications = _repository.GetAllQuery().Where(it => it.JobOfferId == jobId).ToList();

@@ -167,6 +167,9 @@ class ApiGateway {
                 // Cache the response if it's a GET request
                 if (req.method.toLowerCase() === 'get') {
                     await this.serviceUrlsMap.set(cacheKey, response.data);
+                }else{
+                    //Clear cache
+                    await this.serviceUrlsMap.clear();
                 }
 
                 console.log(`Forwarded request to service: ${serviceName} at URL: ${serviceURL}`);

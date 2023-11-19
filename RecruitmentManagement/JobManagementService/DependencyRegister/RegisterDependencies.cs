@@ -6,6 +6,7 @@ using JobManagementService.Services.JobOffer;
 using Newtonsoft.Json;
 using Polly;
 using JobManagementService.Factories;
+using JobManagementService.Saga;
 using Prometheus;
 
 namespace JobManagementService.DependencyRegister;
@@ -18,6 +19,7 @@ public static class RegisterDependencies
 
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped<IJobOfferService, JobOfferService>();
+        services.AddScoped<ISagaCoordinator, SagaCoordinator>();
 
         // Registering CustomHttpClientFactory for dependency injection
         services.AddSingleton<IHttpClientFactory, CustomHttpClientFactory>();
