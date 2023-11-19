@@ -1,13 +1,8 @@
-﻿using System.Text;
-using ApplicationManagementService.Configurations;
-using ApplicationManagementService.Context;
+﻿using ApplicationManagementService.Context;
 using ApplicationManagementService.Factories;
 using ApplicationManagementService.Models;
 using ApplicationManagementService.Repositories;
 using ApplicationManagementService.Services;
-using Newtonsoft.Json;
-using Polly;
-using Prometheus;
 
 namespace ApplicationManagementService.DependencyRegister;
 

@@ -15,4 +15,16 @@ public class JobOfferService : IJobOfferService
     {
         return await _repository.GetByIdAsync(id);
     }
+
+    public async Task DeleteJob(int jobOfferId)
+    {
+        var jobOffer = await _repository.GetByIdAsync(jobOfferId);
+
+        if (jobOffer == null)
+        {
+            return;
+        }
+
+        await _repository.DeleteAsync(jobOffer);
+    }
 }

@@ -52,20 +52,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=Deploy
       - SERVICE_NAME=applicationmanagementservice1
 
-  applicationmanagementservice2:
-    build:
-      context: ./RecruitmentManagement/ApplicationManagementService
-      dockerfile: Dockerfile
-    ports:
-      - "5097:80"
-    networks:
-      - lab-network
-    depends_on:
-      - api-gateway
-      - applicationmanagementdb
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Deploy
-      - SERVICE_NAME=applicationmanagementservice2
+#  applicationmanagementservice2:
+#    build:
+#      context: ./RecruitmentManagement/ApplicationManagementService
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5097:80"
+#    networks:
+#      - lab-network
+#    depends_on:
+#      - api-gateway
+#      - applicationmanagementdb
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Deploy
+#      - SERVICE_NAME=applicationmanagementservice2
 
   jobmanagementservice1:
     build:
@@ -82,20 +82,20 @@ services:
       - ASPNETCORE_ENVIRONMENT=Deploy
       - SERVICE_NAME=jobmanagementservice1
 
-  jobmanagementservice2:
-    build:
-      context: ./RecruitmentManagement/JobManagementService
-      dockerfile: Dockerfile
-    ports:
-      - "5063:80"
-    networks:
-      - lab-network
-    depends_on:
-      - api-gateway
-      - jobmanagementdb
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Deploy
-      - SERVICE_NAME=jobmanagementservice2
+#  jobmanagementservice2:
+#    build:
+#      context: ./RecruitmentManagement/JobManagementService
+#      dockerfile: Dockerfile
+#    ports:
+#      - "5063:80"
+#    networks:
+#      - lab-network
+#    depends_on:
+#      - api-gateway
+#      - jobmanagementdb
+#    environment:
+#      - ASPNETCORE_ENVIRONMENT=Deploy
+#      - SERVICE_NAME=jobmanagementservice2
 
   
   applicationmanagementdb:
@@ -140,9 +140,9 @@ services:
       - service-discovery
       - api-gateway
       - applicationmanagementservice1
-      - applicationmanagementservice2
+#      - applicationmanagementservice2
       - jobmanagementservice1
-      - jobmanagementservice2
+#      - jobmanagementservice2
 
   grafana:
     image: grafana/grafana:latest

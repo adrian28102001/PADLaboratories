@@ -46,4 +46,10 @@ public class Repository<T> : IRepository<T> where T : class
         _dbSet.Remove(entity);
         await _context.SaveChangesAsync();
     }
+    
+    public async Task DeleteAsyncRange(IList<T> entities)
+    {
+        _dbSet.RemoveRange(entities);
+        await _context.SaveChangesAsync();
+    }
 }

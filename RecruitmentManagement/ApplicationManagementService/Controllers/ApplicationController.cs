@@ -62,12 +62,7 @@ public class ApplicationController : ControllerBase
         Console.WriteLine("GET /job/id endpoint hit");
 
         var table = _repository.GetAllQuery();
-        var application = await table.FirstOrDefaultAsync(it => it.JobOfferId == jobId);
-
-        if (application == null)
-        {
-            return NotFound();
-        }
+        var application = table.Where(it => it.JobOfferId == jobId);
 
         return Ok(application);
     }
@@ -85,8 +80,6 @@ public class ApplicationController : ControllerBase
         }
 
         await _repository.AddAsync(application.ToModel());
-
-        // SendEmail(application);
 
         return CreatedAtAction(nameof(GetApplication), new { id = application.Id }, application);
     }
@@ -120,20 +113,28 @@ public class ApplicationController : ControllerBase
         return NoContent();
     }
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteApplication(int id)
+    [HttpDelete("{jobId}")]
+    public async Task<IActionResult> DeleteApplicationsByJobId(int jobId)
     {
         MetricsRegistry.ApplicationDeleteCounter.Inc();
-        Console.WriteLine("DELETE /deleteapplication endpoint hit");
+        Console.WriteLine("DELETE /deleteapplicationsbyjobid endpoint hit");
 
-        var application = await _repository.GetByIdAsync(id);
-        if (application == null)
+        try
         {
-            return NotFound();
-        }
+            var applications = _repository.GetAllQuery().Where(it => it.JobOfferId == jobId).ToList();
 
-        await _repository.DeleteAsync(application);
-        return NoContent();
+            if (applications.Any())
+            {
+                await _repository.DeleteAsyncRange(applications);
+            }
+
+            return NoContent();
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, $"Error occurred while deleting applications for job {jobId}");
+            return StatusCode(500, $"Error occurred: {e.Message}");
+        }
     }
 
     private void SendEmail(ApplicationModel application)
